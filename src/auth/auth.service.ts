@@ -1,40 +1,47 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
-import { AuthDto } from "./dto";
-import * as argon from 'argon2'
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { AuthDto } from './dto';
+import * as argon from 'argon2';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 @Injectable()
-export class AuthService{
+export class AuthService {
+  constructor(private prisma: PrismaService) {}
 
-    constructor(private prisma: PrismaService){}
+  async signup(dto: AuthDto) {
+    try {
+      const hash = await argon.hash(dto.password);
 
-   async signup(dto: AuthDto) {
-
-    try{
-        const hash = await argon.hash(dto.password);
-
-        const user = this.prisma.user.create({
-            data: {
-                email: dto.email,
-                hash
-            }
-        })
-        delete (await user).hash
-        return user
-        
-    } catch(error){
-        if(error instanceof PrismaClientKnownRequestError){
-            if(error.code === 'P2002') {
-                throw new ForbiddenException('Email em uso')
-            }
+      const user = this.prisma.user.create({
+        data: {
+          email: dto.email,
+          hash,
+        },
+      });
+      delete (await user).hash;
+      return user;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Email em uso');
         }
-        throw error
+      }
+      throw error;
     }
-}
+  }
 
-    
-    signin() {
-        return {message: 'I have signed in'}
-    }
+  async signin(dto: AuthDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (!user) throw new ForbiddenException('Credenciais incorretas');
+
+    const passwordMatches = await argon.verify(user.hash, dto.password);
+
+    delete user.hash
+    return user
+  }
 }
