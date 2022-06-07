@@ -37,9 +37,11 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new ForbiddenException('Credenciais incorretas');
+    if (!user) throw new ForbiddenException('Email ou senha inválidos');
 
     const passwordMatches = await argon.verify(user.hash, dto.password);
+    
+    if(!passwordMatches) throw new ForbiddenException('Email ou senha inválidos')
 
     delete user.hash
     return user
