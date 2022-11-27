@@ -17,6 +17,10 @@ export class UserService {
     return editedUser;
   }
 
+  async getOne(id: number){
+   return this.userRepository.getOne(id)
+  }
+
   async getAll() {
     const allUsers = this.userRepository.getAll();
     return allUsers;

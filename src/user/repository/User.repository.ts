@@ -31,12 +31,22 @@ export class UserRepository implements IUserRepository {
     return editedUser;
   }
 
+  async getOne(id: number): Promise<User> {
+    const user = this.prisma.user.findUnique({
+      where: {
+        id: id
+      }
+    })
+
+    return user
+  }
+
   async getAll(): Promise<User[]> {
     const allUsers = this.prisma.user.findMany();
     return allUsers;
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<User> {
     const deletedUser = this.prisma.user.delete({
       where: {
         id: id,

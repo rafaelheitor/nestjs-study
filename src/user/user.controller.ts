@@ -25,6 +25,12 @@ export class UserController {
     return this.userService.new(dto);
   }
 
+  @Get('unique/:id')
+  getOne(@Param() params: any){
+    const id = parseInt(params.id)
+    return this.userService.getOne(id)
+  }
+
   @Get('allusers')
   getAll() {
     return this.userService.getAll();
