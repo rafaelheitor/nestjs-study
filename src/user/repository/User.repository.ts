@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../Entity/User';
-import { IUserRepository } from './usecase/UserRepository.usecase';
+import { User } from '../../common/domain/user/Entity/User';
+import { IUserRepository } from '../../common/domain/user/persistence/usecase/UserRepository.usecase';
 import { PrismaService } from '../../prisma/prisma.service';
 import * as argon from 'argon2';
-import { AuthDto } from '../../auth/dto/auth.dto';
-import { EditUserDto } from 'src/auth/dto/editUser.dto';
+import { AuthDto } from '../dto/auth.dto';
+import { EditUserDto } from 'src/user/dto/editUser.dto';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -28,7 +28,21 @@ export class UserRepository implements IUserRepository {
       where: { id: id },
       data: { firstName: payload.firstName, lastName: payload.lastName },
     });
+    return editedUser;
+  }
 
-    return editedUser
+  async getAll(): Promise<User[]> {
+    const allUsers = this.prisma.user.findMany();
+    return allUsers;
+  }
+
+  async delete(id: number) {
+    const deletedUser = this.prisma.user.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return deletedUser;
   }
 }
