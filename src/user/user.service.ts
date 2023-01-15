@@ -17,8 +17,12 @@ export class UserService {
     return editedUser;
   }
 
-  async getOne(id: number){
-   return this.userRepository.getOne(id)
+  async getByEmail(email: string) {
+    return this.userRepository.getByEmail(email);
+  }
+
+  async getOne(id: number) {
+    return this.userRepository.getOne(id);
   }
 
   async getAll() {

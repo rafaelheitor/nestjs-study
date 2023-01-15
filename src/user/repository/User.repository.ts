@@ -31,14 +31,24 @@ export class UserRepository implements IUserRepository {
     return editedUser;
   }
 
+  async getByEmail(email: string): Promise<User> {
+    const user = this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    return user;
+  }
+
   async getOne(id: number): Promise<User> {
     const user = this.prisma.user.findUnique({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
 
-    return user
+    return user;
   }
 
   async getAll(): Promise<User[]> {

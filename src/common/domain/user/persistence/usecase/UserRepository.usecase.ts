@@ -6,6 +6,6 @@ export interface IUserRepository {
   save(user: AuthDto): Promise<User>;
   edit(id: number, payload: EditUserDto): Promise<User>;
   getAll(): Promise<User[]>;
-  getOne(id: number): Promise<User>
+  getByEmail(email: string): Promise<User>
   delete(id: number): Promise<User>
 }
