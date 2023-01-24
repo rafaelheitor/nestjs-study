@@ -12,7 +12,6 @@ export type ClassValidationErrors = {
 };
 
 export class ClassValidator {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   public static async validate<TTarget extends object>(
     target: TTarget,
     context?: string,
