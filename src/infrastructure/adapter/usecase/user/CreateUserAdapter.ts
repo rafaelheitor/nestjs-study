@@ -1,5 +1,5 @@
 import { Exclude, Expose, plainToClass } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsEmail, IsString } from 'class-validator';
 import { UseCaseValidatableAdapter } from 'src/Core/common/adapter/usecase/UseCaseValidatableAdapter';
 import { CreateUserPort } from 'src/Core/Domain/user/port/useCase/CreateUserPort';
 
@@ -14,6 +14,7 @@ export class CreateUserAdapter
 
   @Expose()
   @IsString()
+  @IsEmail()
   public email: string;
 
   @Expose()
