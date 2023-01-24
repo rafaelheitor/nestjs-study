@@ -1,0 +1,12 @@
+GET  http://localhost:3333/user/allusers
+
+###
+
+POST http://localhost:3333/users/new
+content-type: application/json
+
+{
+    "name": "João",
+    "email": "joao@email.com",
+    "password": "123456"
+}
