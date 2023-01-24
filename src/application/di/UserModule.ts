@@ -1,5 +1,5 @@
 import { Module, Provider } from '@nestjs/common';
-import { UserDITokens } from 'src/Core/common/di/UserDITokens';
+import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
 import { UserRepositoryInMemory } from 'src/infrastructure/adapter/persistence/UserRepositoryAdapter';
 import { CreateUserService } from 'src/Core/service/user/usecase/CreateUserService';
 import { UserController } from '../api/http-rest/controller/UserController';

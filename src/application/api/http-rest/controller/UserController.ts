@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { UserDITokens } from 'src/Core/common/di/UserDITokens';
+import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
 import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
 import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';
 import { CreateUserAdapter } from 'src/infrastructure/adapter/usecase/user/CreateUserAdapter';
