@@ -9,7 +9,7 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
   }
 
   async save(user: User): Promise<User> {
-    const savedUser = User.new(user);
+    const savedUser = await User.new(user);
     this.users.push(savedUser);
     return savedUser;
   }
