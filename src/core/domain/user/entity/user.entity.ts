@@ -1,5 +1,5 @@
 import { Entity } from '../../../common/entity/Entity';
-import { IsEmail, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsString } from 'class-validator';
 import { v4 } from 'uuid';
 import { compare, genSalt, hash } from 'bcrypt';
 
@@ -8,21 +8,21 @@ export type createUserPayload = {
   name: string;
   email: string;
   password: string;
+  createdAt?: Date;
 };
 
 export class User extends Entity<string> {
   @IsString()
-  public id: string;
+  private name: string;
 
-  @IsString()
-  public name: string;
-
-  @IsString()
   @IsEmail()
-  public email: string;
+  private readonly email: string;
 
   @IsString()
-  public password: string;
+  private password: string;
+
+  @IsDate()
+  private readonly createdAt: Date;
 
   private constructor(payload: createUserPayload) {
     super();
@@ -30,6 +30,7 @@ export class User extends Entity<string> {
     this.name = payload.name;
     this.email = payload.email;
     this.password = payload.password;
+    this.createdAt = payload.createdAt || new Date();
   }
 
   async hashPassword(): Promise<void> {
@@ -46,6 +47,10 @@ export class User extends Entity<string> {
 
   async comparePassword(password: string): Promise<boolean> {
     return compare(password, this.password);
+  }
+
+  getCreatedAt(): Date {
+    return this.createdAt;
   }
 
   public static async new(payload: createUserPayload): Promise<User> {
