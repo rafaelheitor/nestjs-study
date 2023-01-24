@@ -13,13 +13,13 @@ export type createUserPayload = {
 
 export class User extends Entity<string> {
   @IsString()
-  private name: string;
+  public name: string;
 
   @IsEmail()
-  private readonly email: string;
+  public email: string;
 
   @IsString()
-  private password: string;
+  public password: string;
 
   @IsDate()
   private readonly createdAt: Date;
@@ -51,6 +51,18 @@ export class User extends Entity<string> {
 
   getCreatedAt(): Date {
     return this.createdAt;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getEmail(): string {
+    return this.email;
+  }
+
+  getPassword(): string {
+    return this.password;
   }
 
   public static async new(payload: createUserPayload): Promise<User> {

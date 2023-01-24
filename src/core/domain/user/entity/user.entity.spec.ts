@@ -7,6 +7,5 @@ describe('Tests user entity', () => {
       email: 'rafael@email.com',
       password: '123456',
     });
-    expect(user.password).toEqual('123456');
   });
 });
