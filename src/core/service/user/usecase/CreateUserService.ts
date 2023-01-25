@@ -5,13 +5,13 @@ import { CreateUserPort } from 'src/Core/Domain/user/port/useCase/CreateUserPort
 import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
 import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';
 import { Code } from 'src/Core/common/code/Code';
-import { CoreAssert } from 'src/core/common/util/assert/CoreAssert';
 
 export class CreateUserService implements CreateUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   public async execute(port?: CreateUserPort): Promise<UserUsecaseDto> {
     const user: User = await User.new({
+      id: port.id,
       name: port.name,
       password: port.password,
       email: port.email,

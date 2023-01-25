@@ -12,7 +12,6 @@ export class GetUserService implements GetUserUseCase {
 
   async execute(port?: GetUserPort): Promise<UserUsecaseDto> {
     const user: User = await this.userRepository.getByEmail(port.email);
-    // console.log(user);
 
     CoreAssert.notEmpty(
       user,

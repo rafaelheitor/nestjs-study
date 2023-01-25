@@ -7,7 +7,7 @@ import {
 } from '../util/classValidator/ClassValidator';
 
 export class Entity<TIdentifier extends string | number> {
-  protected id: Optional<TIdentifier>;
+  public id: Optional<TIdentifier>;
 
   public getId(): TIdentifier {
     if (typeof this.id === 'undefined') {

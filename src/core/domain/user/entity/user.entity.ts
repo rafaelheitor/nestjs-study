@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 import { compare, genSalt, hash } from 'bcrypt';
 
 export type createUserPayload = {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   password: string;
