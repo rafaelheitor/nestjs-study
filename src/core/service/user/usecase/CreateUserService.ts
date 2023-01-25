@@ -18,14 +18,13 @@ export class CreateUserService implements CreateUserUseCase {
     });
 
     const alreadyUser: User = await this.userRepository.getByEmail(port.email);
-
-    CoreAssert.notEmpty(
-      alreadyUser,
-      Exception.new({
+    if (alreadyUser) {
+      throw Exception.new({
         code: Code.ENTITY_ALREADY_EXISTS_ERROR,
         overrideMessage: 'User already exists',
-      }),
-    );
+      });
+    }
+
     await this.userRepository.save(user);
     return UserUsecaseDto.newFromUser(user);
   }
