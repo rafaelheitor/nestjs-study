@@ -14,7 +14,7 @@ describe('Tests the UserUsecaseDto', () => {
     const user2: User = await createUser();
     const user3: User = await createUser();
     const user4: User = await createUser();
-    const users = [{ ...user }, { ...user2 }, { ...user3 }, { ...user4 }];
+    const users: User[] = [user, user2, user3, user4];
 
     const listFromDto: UserUsecaseDto[] = UserUsecaseDto.newListFromUser(users);
     expect(listFromDto[0] instanceof UserUsecaseDto).toBeTruthy();
