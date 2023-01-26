@@ -13,13 +13,13 @@ export type createUserPayload = {
 
 export class User extends Entity<string> {
   @IsString()
-  public name: string;
+  private name: string;
 
   @IsEmail()
-  public email: string;
+  private email: string;
 
   @IsString()
-  public password: string;
+  private password: string;
 
   @IsDate()
   private readonly createdAt: Date;
