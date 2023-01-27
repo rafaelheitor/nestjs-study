@@ -7,4 +7,8 @@ export class CoreAssert {
     }
     return value;
   }
+
+  public static isFalse(expression: boolean, exception: Error) {
+    if (expression) throw exception;
+  }
 }
