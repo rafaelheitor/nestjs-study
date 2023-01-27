@@ -5,6 +5,7 @@ import { CreateUserPort } from '../../../domain/user/port/useCase/CreateUserPort
 import { CreateUserUseCase } from '../../../domain/user/usecase/CreateUserUsecase';
 import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
 import { Code } from '../../../common/code/Code';
+import { CoreAssert } from '../../../common/util/assert/CoreAssert';
 
 export class CreateUserService implements CreateUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
@@ -17,13 +18,15 @@ export class CreateUserService implements CreateUserUseCase {
       email: port.email,
     });
 
-    const alreadyUser: User = await this.userRepository.getByEmail(port.email);
-    if (alreadyUser) {
-      throw Exception.new({
+    const alreadyUser = !!(await this.userRepository.getByEmail(port.email));
+
+    CoreAssert.isFalse(
+      alreadyUser,
+      Exception.new({
         code: Code.ENTITY_ALREADY_EXISTS_ERROR,
         overrideMessage: 'User already exists',
-      });
-    }
+      }),
+    );
 
     await this.userRepository.save(user);
     return UserUsecaseDto.newFromUser(user);

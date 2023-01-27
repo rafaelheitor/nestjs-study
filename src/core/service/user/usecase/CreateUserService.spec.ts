@@ -6,8 +6,11 @@ import { CreateUserPort } from '../../../domain/user/port/useCase/CreateUserPort
 import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
 import { User } from '../../../domain/user/entity/User';
 import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
+import { Exception } from '../../../common/exception/Exception';
+import { ClassValidationDetails } from '../../../common/util/classValidator/ClassValidator';
 import { v4 } from 'uuid';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Code } from '../../../common/code/Code';
 
 describe('Tests CreateUserService', () => {
   let createUserService: CreateUserUseCase;
@@ -66,6 +69,33 @@ describe('Tests CreateUserService', () => {
 
       expect(resultUserUseCaseDto).toEqual(expectedUserUseCaseDto);
       expect(resultAddedUser).toEqual(expectedUser);
+    });
+
+    it('Should throw exception if a user already exists', async () => {
+      const userPort: CreateUserPort = createPort();
+
+      const mockUser: User = await User.new({
+        id: userPort.id,
+        name: userPort.name,
+        email: userPort.email,
+        password: userPort.password,
+      });
+
+      jest
+        .spyOn(userRepository, 'getByEmail')
+        .mockImplementation(async () => mockUser);
+
+      expect.hasAssertions();
+
+      try {
+        await createUserService.execute(userPort);
+      } catch (error) {
+        const exception: Exception<ClassValidationDetails> =
+          error as Exception<ClassValidationDetails>;
+
+        expect(exception.code).toBe(Code.ENTITY_ALREADY_EXISTS_ERROR.code);
+        expect(exception).toBeInstanceOf(Exception);
+      }
     });
   });
 });
