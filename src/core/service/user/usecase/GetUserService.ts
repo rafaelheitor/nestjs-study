@@ -1,7 +1,7 @@
 import { Code } from 'src/Core/common/code/Code';
 import { Exception } from 'src/Core/common/exception/Exception';
 import { CoreAssert } from 'src/core/common/util/assert/CoreAssert';
-import { User } from 'src/Core/Domain/user/entity/user.entity';
+import { User } from 'src/Core/Domain/user/entity/User';
 import { UserRepositoryPort } from 'src/Core/Domain/user/port/persistence/userRepositoryPort';
 import { GetUserPort } from 'src/core/domain/user/port/useCase/GetUserPort';
 import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';

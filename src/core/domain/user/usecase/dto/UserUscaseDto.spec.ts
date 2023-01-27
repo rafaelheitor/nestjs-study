@@ -1,4 +1,4 @@
-import { createUserPayload, User } from '../../entity/user.entity';
+import { createUserPayload, User } from '../../entity/User';
 import { UserUsecaseDto } from './UserUsecaseDto';
 
 describe('Tests the UserUsecaseDto', () => {

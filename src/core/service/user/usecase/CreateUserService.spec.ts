@@ -4,7 +4,7 @@ import { UserDITokens } from '../../../domain/user/di/UserDITokens';
 import { CreateUserService } from './CreateUserService';
 import { CreateUserPort } from '../../../domain/user/port/useCase/CreateUserPort';
 import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
-import { User } from '../../../domain/user/entity/user.entity';
+import { User } from '../../../domain/user/entity/User';
 import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
 import { v4 } from 'uuid';
 import { Test, TestingModule } from '@nestjs/testing';

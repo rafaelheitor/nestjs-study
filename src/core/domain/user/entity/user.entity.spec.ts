@@ -1,4 +1,4 @@
-import { User } from './user.entity';
+import { User } from './User';
 
 describe('Tests user entity', () => {
   it('Should create a new user object', async () => {

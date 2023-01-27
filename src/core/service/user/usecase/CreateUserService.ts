@@ -1,5 +1,5 @@
 import { Exception } from '../../../common/exception/Exception';
-import { User } from '../../../domain/user/entity/user.entity';
+import { User } from '../../../domain/user/entity/User';
 import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
 import { CreateUserPort } from '../../../domain/user/port/useCase/CreateUserPort';
 import { CreateUserUseCase } from '../../../domain/user/usecase/CreateUserUsecase';
