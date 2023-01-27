@@ -6,7 +6,9 @@ describe('Tests the UserUsecaseDto', () => {
     const user = await createUser();
     const userDto: UserUsecaseDto = UserUsecaseDto.newFromUser(user);
 
-    expect(user !== userDto).toBeTruthy();
+    expect(user.getName()).toBe(userDto.name);
+    expect(user.getId()).toBe(userDto.id);
+    expect(user.getEmail()).toBe(userDto.email);
   });
 
   it('Should Create a list from User dto', async () => {
