@@ -1,7 +1,9 @@
 import { Entity } from '../../../common/entity/Entity';
-import { IsDate, IsEmail, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsOptional, IsString } from 'class-validator';
 import { v4 } from 'uuid';
 import { compare, genSalt, hash } from 'bcrypt';
+import { RemovableEntity } from '../../../common/entity/RemovableEntity';
+import { Nullable } from 'src/core/common/type/CommonTypes';
 
 export type createUserPayload = {
   id?: string;
@@ -9,9 +11,16 @@ export type createUserPayload = {
   email: string;
   password: string;
   createdAt?: Date;
+  removedAt?: Date;
+  editedAt?: Date;
 };
 
-export class User extends Entity<string> {
+export type editUserPayload = {
+  name?: string;
+  password?: string;
+};
+
+export class User extends Entity<string> implements RemovableEntity {
   @IsString()
   private name: string;
 
@@ -24,6 +33,14 @@ export class User extends Entity<string> {
   @IsDate()
   private readonly createdAt: Date;
 
+  @IsDate()
+  @IsOptional()
+  private removedAt: Nullable<Date>;
+
+  @IsDate()
+  @IsOptional()
+  private editedAt: Nullable<Date>;
+
   private constructor(payload: createUserPayload) {
     super();
     this.id = payload.id || v4();
@@ -31,38 +48,65 @@ export class User extends Entity<string> {
     this.email = payload.email;
     this.password = payload.password;
     this.createdAt = payload.createdAt || new Date();
+    this.removedAt = payload.removedAt || null;
+    this.editedAt = payload.editedAt || null;
   }
 
-  async hashPassword(): Promise<void> {
+  public async hashPassword(): Promise<void> {
     const salt: string = await genSalt();
     this.password = await hash(this.password, salt);
     await this.validate();
   }
 
-  async editPassword(password: string): Promise<void> {
+  public async editPassword(password: string): Promise<void> {
     const salt: string = await genSalt();
     this.password = await hash(password, salt);
     await this.validate();
   }
 
-  async comparePassword(password: string): Promise<boolean> {
+  public async comparePassword(password: string): Promise<boolean> {
     return compare(password, this.password);
   }
 
-  getCreatedAt(): Date {
+  public getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  getName(): string {
+  public getName(): string {
     return this.name;
   }
 
-  getEmail(): string {
+  public getEmail(): string {
     return this.email;
   }
 
-  getPassword(): string {
+  public getPassword(): string {
     return this.password;
+  }
+
+  public async edit(payload: editUserPayload) {
+    if (payload.name) {
+      this.name = payload.name;
+    }
+
+    if (payload.password) {
+      this.password = payload.password;
+      this.hashPassword();
+    }
+    this.editedAt = new Date();
+  }
+
+  public getEditedAt(): Date {
+    return this.editedAt;
+  }
+
+  public async remove(): Promise<void> {
+    this.removedAt = new Date();
+    this.validate();
+  }
+
+  getRemovedAt(): Nullable<Date> {
+    return this.removedAt;
   }
 
   public static async new(payload: createUserPayload): Promise<User> {
