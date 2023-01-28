@@ -48,6 +48,9 @@ describe('Tests user entity', () => {
 
       await user.edit({
         name: 'João',
+      });
+
+      await user.edit({
         password: '654321',
       });
 
@@ -55,6 +58,7 @@ describe('Tests user entity', () => {
       expect(user.getEditedAt()!.getTime()).toBeGreaterThanOrEqual(
         currentDate - 5000,
       );
+      expect(user.comparePassword('654321')).resolves.toBeTruthy();
     });
   });
 

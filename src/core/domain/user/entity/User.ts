@@ -90,8 +90,7 @@ export class User extends Entity<string> implements RemovableEntity {
     }
 
     if (payload.password) {
-      this.password = payload.password;
-      this.hashPassword();
+      await this.editPassword(payload.password);
     }
     this.editedAt = new Date();
   }
