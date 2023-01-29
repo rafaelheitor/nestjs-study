@@ -4,6 +4,7 @@ import { UserRepositoryInMemory } from 'src/infrastructure/adapter/persistence/U
 import { CreateUserService } from 'src/Core/service/user/usecase/CreateUserService';
 import { UserController } from '../api/http-rest/controller/UserController';
 import { GetUserService } from 'src/core/service/user/usecase/GetUserService';
+import { EditUserService } from 'src/core/service/user/usecase/EditUserService';
 
 const persistenceProvider: Provider[] = [
   {
@@ -25,6 +26,11 @@ const useCaseProviders: Provider[] = [
     useFactory: (userRepository) => {
       return new GetUserService(userRepository);
     },
+    inject: [UserDITokens.UserRepository],
+  },
+  {
+    provide: UserDITokens.EditUserUseCase,
+    useFactory: (userRepository) => new EditUserService(userRepository),
     inject: [UserDITokens.UserRepository],
   },
 ];

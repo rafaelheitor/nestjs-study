@@ -16,12 +16,20 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
       password: user.getPassword(),
     });
 
-    this.users.push(savedUser);
+    this.users.push(user);
     return savedUser;
   }
-  edit(id: string, user: User) {
-    throw new Error('Method not implemented.');
+
+  async edit(user: User): Promise<User> {
+    const foundUser = await this.getByEmail(user.getEmail());
+    const editedUser = await foundUser.edit({
+      name: user.getName(),
+      password: user.getPassword(),
+    });
+    await this.save(editedUser);
+    return editedUser;
   }
+
   getAll(): Promise<User[]> {
     throw new Error('Method not implemented.');
   }

@@ -18,3 +18,13 @@ Content-Type: application/json
 {
     "email": "joao@email.com"
 }
+
+###
+PATCH http://localhost:3333/users/edit
+Content-Type: application/json
+
+{
+    "email": "joao@email.com",
+    "name": "Rafael",
+    "password": "03051979"
+}

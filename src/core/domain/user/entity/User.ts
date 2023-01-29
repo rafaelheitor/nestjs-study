@@ -84,7 +84,7 @@ export class User extends Entity<string> implements RemovableEntity {
     return this.password;
   }
 
-  public async edit(payload: editUserPayload) {
+  public async edit(payload: editUserPayload): Promise<User> {
     if (payload.name) {
       this.name = payload.name;
     }
@@ -93,6 +93,8 @@ export class User extends Entity<string> implements RemovableEntity {
       await this.editPassword(payload.password);
     }
     this.editedAt = new Date();
+
+    return this;
   }
 
   public getEditedAt(): Date {

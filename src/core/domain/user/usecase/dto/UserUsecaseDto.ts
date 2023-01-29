@@ -1,4 +1,5 @@
 import { Exclude, Expose, plainToClass } from 'class-transformer';
+import { IsOptional } from 'class-validator';
 import { User } from '../../entity/User';
 
 @Exclude()
@@ -11,6 +12,14 @@ export class UserUsecaseDto {
 
   @Expose()
   public email: string;
+
+  @Expose()
+  @IsOptional()
+  public createdAt: Date;
+
+  @Expose()
+  @IsOptional()
+  public editedAt: Date;
 
   public static newFromUser(user: User): UserUsecaseDto {
     return plainToClass(UserUsecaseDto, user);
