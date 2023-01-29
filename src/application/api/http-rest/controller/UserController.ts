@@ -53,7 +53,6 @@ export class UserController {
       name: body.name,
       password: body.password,
     });
-    console.log(adapter);
 
     const editedUser: UserUsecaseDto = await this.editUserUseCase.execute(
       adapter,
