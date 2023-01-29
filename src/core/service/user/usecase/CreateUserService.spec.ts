@@ -61,8 +61,8 @@ describe('Tests CreateUserService', () => {
       const resultUserUseCaseDto: UserUsecaseDto =
         await createUserService.execute(userPort);
 
-      const resultAddedUser: User = jest.spyOn(userRepository, 'save')
-        .mock[0][0].calls;
+      const resultAddedUser: User = jest.spyOn(userRepository, 'save').mock
+        .calls[0][0];
 
       Reflect.set(resultAddedUser, 'password', expectedUser.getPassword());
       Reflect.set(resultAddedUser, 'createdAt', expectedUser.getCreatedAt());
