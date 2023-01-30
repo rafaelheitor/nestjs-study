@@ -60,6 +60,20 @@ describe('Tests user entity', () => {
       );
       expect(user.comparePassword('654321')).resolves.toBeTruthy();
     });
+
+    it('Should not edit user if parameters are not provided, and should not mark user as edited', async () => {
+      const user: User = await User.new({
+        name: expectedUser.name,
+        email: expectedUser.email,
+        password: expectedUser.password,
+      });
+
+      await user.edit({});
+
+      expect(user.getName()).toBe(expectedUser.name);
+      expect(user.comparePassword(expectedUser.password)).resolves.toBeTruthy();
+      expect(user.getEditedAt()).toBeFalsy();
+    });
   });
 
   describe('remove', () => {
