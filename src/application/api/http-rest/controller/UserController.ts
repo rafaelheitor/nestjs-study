@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Patch } from '@nestjs/common';
 import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
 import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
+import { EditUserUseCaseDto } from 'src/core/domain/user/usecase/dto/EditUserUseCaseDto';
 import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';
 import { EditUserUseCase } from 'src/core/domain/user/usecase/EditUserUseCase';
 import { GetUserUseCase } from 'src/core/domain/user/usecase/getUserUseCase';
@@ -54,7 +55,7 @@ export class UserController {
       password: body.password,
     });
 
-    const editedUser: UserUsecaseDto = await this.editUserUseCase.execute(
+    const editedUser: EditUserUseCaseDto = await this.editUserUseCase.execute(
       adapter,
     );
 

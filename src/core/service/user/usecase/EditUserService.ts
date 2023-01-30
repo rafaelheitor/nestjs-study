@@ -4,13 +4,13 @@ import { CoreAssert } from '../../../common/util/assert/CoreAssert';
 import { User } from '../../../domain/user/entity/User';
 import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
 import { EditUserPort } from '../../../domain/user/port/useCase/EditUserPort';
-import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
 import { EditUserUseCase } from '../../../domain/user/usecase/EditUserUseCase';
+import { EditUserUseCaseDto } from '../../../domain/user/usecase/dto/EditUserUseCaseDto';
 
 export class EditUserService implements EditUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
-  async execute(port?: EditUserPort): Promise<UserUsecaseDto> {
+  async execute(port?: EditUserPort): Promise<EditUserUseCaseDto> {
     const foundUser: User = await this.userRepository.getByEmail(port.email);
 
     CoreAssert.isFalse(
@@ -27,7 +27,8 @@ export class EditUserService implements EditUserUseCase {
     });
     await this.userRepository.edit(foundUser);
 
-    const editedUser: UserUsecaseDto = UserUsecaseDto.newFromUser(foundUser);
+    const editedUser: EditUserUseCaseDto =
+      EditUserUseCaseDto.newFromUser(foundUser);
     return editedUser;
   }
 }

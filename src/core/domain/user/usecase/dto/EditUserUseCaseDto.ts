@@ -13,7 +13,7 @@ export class EditUserUseCaseDto {
   public createdAt: string;
 
   @Expose()
-  public editedAt: string;
+  public editedAt: Date;
 
   public static newFromUser(user: User): EditUserUseCaseDto {
     return plainToClass(EditUserUseCaseDto, user);

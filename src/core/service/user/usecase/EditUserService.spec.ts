@@ -5,9 +5,9 @@ import { UserDITokens } from '../../../domain/user/di/UserDITokens';
 import { User } from '../../../domain/user/entity/User';
 import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
 import { EditUserPort } from '../../../domain/user/port/useCase/EditUserPort';
-import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
 import { EditUserUseCase } from '../../../domain/user/usecase/EditUserUseCase';
 import { EditUserService } from './EditUserService';
+import { EditUserUseCaseDto } from '../../../domain/user/usecase/dto/EditUserUseCaseDto';
 
 describe('EditUserService', () => {
   let userRepository: UserRepositoryPort;
@@ -63,10 +63,10 @@ describe('EditUserService', () => {
 
       jest.spyOn(userRepository, 'edit').mockClear();
 
-      const expectedUserUseCaseDto: UserUsecaseDto =
-        UserUsecaseDto.newFromUser(mockUser);
+      const expectedUserUseCaseDto: EditUserUseCaseDto =
+        EditUserUseCaseDto.newFromUser(mockUser);
 
-      const resultUserUseCaseDto: UserUsecaseDto =
+      const resultUserUseCaseDto: EditUserUseCaseDto =
         await editUserService.execute(editUserPort);
 
       const result: User = jest.spyOn(userRepository, 'edit').mock.calls[0][0];

@@ -1,6 +1,6 @@
 import { UseCase } from 'src/Core/common/usecase/Usecase';
 import { EditUserPort } from '../port/useCase/EditUserPort';
-import { UserUsecaseDto } from './dto/UserUsecaseDto';
+import { EditUserUseCaseDto } from './dto/EditUserUseCaseDto';
 
 export interface EditUserUseCase
-  extends UseCase<EditUserPort, UserUsecaseDto> {}
+  extends UseCase<EditUserPort, EditUserUseCaseDto> {}
