@@ -46,7 +46,7 @@ describe('DeleteUserService', () => {
     jest.spyOn(userRepository, 'getByEmail').mockImplementation(async () => {
       return mockUser;
     });
-    jest.spyOn(userRepository, 'delete').mockImplementation(async () => {});
+    const deleteMethod = jest.spyOn(userRepository, 'delete');
 
     const expectedDeleteUserDto: DeleteUserUseCaseDto =
       DeleteUserUseCaseDto.newFromUser(mockUser);
@@ -60,5 +60,6 @@ describe('DeleteUserService', () => {
     Reflect.set(resultDeleteUserDto, 'removedAt', customRemovedAt);
 
     expect(expectedDeleteUserDto).toEqual(resultDeleteUserDto);
+    expect(deleteMethod).toHaveBeenCalledWith(mockUser.getEmail());
   });
 });
