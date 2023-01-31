@@ -37,7 +37,7 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
     const user: User = this.users.find((user) => user.getEmail() === email);
     return user;
   }
-  delete(id: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  delete(email: string): void {
+    this.users = this.users.filter((user) => user.getEmail() !== email);
   }
 }

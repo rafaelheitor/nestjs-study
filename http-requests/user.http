@@ -28,3 +28,12 @@ Content-Type: application/json
     "name": "Rafael",
     "password": "03051979"
 }
+
+###
+
+DELETE  http://localhost:3333/users/delete
+Content-Type: application/json
+
+{
+    "email": "joao@email.com"
+}

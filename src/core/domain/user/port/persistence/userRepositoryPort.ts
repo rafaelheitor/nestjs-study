@@ -6,5 +6,5 @@ export interface UserRepositoryPort {
   edit(user: User): Promise<User>;
   getAll(): Promise<User[]>;
   getByEmail(email: string): Promise<User>;
-  delete(id: string): Promise<User>;
+  delete(email: string): void;
 }

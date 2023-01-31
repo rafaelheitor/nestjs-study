@@ -1,11 +1,21 @@
-import { Body, Controller, Get, Inject, Post, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
 import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
+import { DeleteUserUseCase } from 'src/core/domain/user/usecase/DeleteUserUseCase';
 import { EditUserUseCaseDto } from 'src/core/domain/user/usecase/dto/EditUserUseCaseDto';
 import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';
 import { EditUserUseCase } from 'src/core/domain/user/usecase/EditUserUseCase';
 import { GetUserUseCase } from 'src/core/domain/user/usecase/getUserUseCase';
 import { CreateUserAdapter } from 'src/infrastructure/adapter/usecase/user/CreateUserAdapter';
+import { DeleteUserAdapter } from 'src/infrastructure/adapter/usecase/user/DeleteUserAdapter';
 import { EditUserAdapter } from 'src/infrastructure/adapter/usecase/user/EditUserAdapter';
 import { GetUserAdapter } from 'src/infrastructure/adapter/usecase/user/GetUserAdapter';
 
@@ -20,6 +30,9 @@ export class UserController {
 
     @Inject(UserDITokens.EditUserUseCase)
     private readonly editUserUseCase: EditUserUseCase,
+
+    @Inject(UserDITokens.DeleteUserUseCase)
+    private readonly deleteUserUseCase: DeleteUserUseCase,
   ) {}
 
   @Post('new')
@@ -60,5 +73,15 @@ export class UserController {
     );
 
     return editedUser;
+  }
+
+  @Delete('delete')
+  public async deleteUser(@Body() body) {
+    const adapter: DeleteUserAdapter = await DeleteUserAdapter.new({
+      email: body.email,
+    });
+
+    const deletedUser = this.deleteUserUseCase.execute(adapter);
+    return deletedUser;
   }
 }

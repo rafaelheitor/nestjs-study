@@ -1,5 +1,5 @@
-export type EditUserPort = {
+export interface EditUserPort {
   email: string;
   name?: string;
   password?: string;
-};
+}

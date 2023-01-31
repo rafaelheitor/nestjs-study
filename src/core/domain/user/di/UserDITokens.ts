@@ -10,6 +10,9 @@ export class UserDITokens {
   public static readonly EditUserUseCase: unique symbol =
     Symbol('EditUserUseCase');
 
+  public static readonly DeleteUserUseCase: unique symbol =
+    Symbol('DeleteUserUseCase');
+
   // Repositories
 
   public static readonly UserRepository: unique symbol =
