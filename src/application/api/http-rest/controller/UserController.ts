@@ -82,7 +82,11 @@ export class UserController {
       email: body.email,
     });
 
-    this.deleteUserUseCase.execute(adapter);
-    return CoreApiResponse.success(`User was deleted`);
+    const deletedUser = await this.deleteUserUseCase.execute(adapter);
+    if (deletedUser) {
+      return CoreApiResponse.success('User Deleted');
+    }
+
+    return deletedUser;
   }
 }

@@ -17,12 +17,13 @@ export class DeleteUserService implements DeleteUserUseCase {
       !foundUser,
       Exception.new({
         code: Code.ENTITY_NOT_FOUND_ERROR,
-        overrideMessage: `User with email ${port.email} was not found`,
+        overrideMessage: `User ${port.email} was not found`,
       }),
     );
 
     await foundUser.remove();
     this.userRepository.delete(foundUser.getEmail());
-    return DeleteUserUseCaseDto.newFromUser(foundUser);
+    const deletedUser = DeleteUserUseCaseDto.newFromUser(foundUser);
+    return deletedUser;
   }
 }
