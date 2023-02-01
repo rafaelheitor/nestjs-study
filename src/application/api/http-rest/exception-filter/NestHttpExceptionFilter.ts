@@ -9,6 +9,7 @@ import { Request, Response } from 'express';
 import { CoreApiResponse } from 'src/core/common/api/CoreApiResponse';
 import { Code } from 'src/core/common/code/Code';
 import { Exception } from 'src/core/common/exception/Exception';
+
 @Catch()
 export class NestHttpExceptionFilter implements ExceptionFilter {
   public catch(error: Error, host: ArgumentsHost) {
@@ -54,7 +55,11 @@ export class NestHttpExceptionFilter implements ExceptionFilter {
     errorResponse: CoreApiResponse<unknown>,
   ): CoreApiResponse<unknown> {
     if (error instanceof Exception) {
-      errorResponse = CoreApiResponse.error(error.code, error.message, null);
+      errorResponse = CoreApiResponse.error(
+        error.code,
+        error.message,
+        error.data,
+      );
     }
 
     return errorResponse;
