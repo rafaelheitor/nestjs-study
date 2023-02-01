@@ -7,6 +7,7 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
+import { CoreApiResponse } from 'src/core/common/api/CoreApiResponse';
 import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
 import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
 import { DeleteUserUseCase } from 'src/core/domain/user/usecase/DeleteUserUseCase';
@@ -47,7 +48,7 @@ export class UserController {
       adapter,
     );
 
-    return createdUser;
+    return CoreApiResponse.success('User Created', createdUser);
   }
 
   @Get('user')
@@ -57,7 +58,7 @@ export class UserController {
     });
 
     const user: UserUsecaseDto = await this.getUserUseCase.execute(adapter);
-    return user;
+    return CoreApiResponse.success('User found', user);
   }
 
   @Patch('edit')
@@ -72,7 +73,7 @@ export class UserController {
       adapter,
     );
 
-    return editedUser;
+    return CoreApiResponse.success('user was Edited successfully', editedUser);
   }
 
   @Delete('delete')
@@ -81,7 +82,7 @@ export class UserController {
       email: body.email,
     });
 
-    const deletedUser = this.deleteUserUseCase.execute(adapter);
-    return deletedUser;
+    this.deleteUserUseCase.execute(adapter);
+    return CoreApiResponse.success(`User was deleted`);
   }
 }
