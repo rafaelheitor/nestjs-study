@@ -6,6 +6,9 @@ import { DeleteUserUseCase } from '../../../domain/user/usecase/DeleteUserUseCas
 import { DeleteUserUseCaseDto } from '../../../domain/user/usecase/dto/DeleteUserUseCaseDto';
 import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
 import { DeleteUserService } from './DeleteUserService';
+import { Exception } from '../../../common/exception/Exception';
+import { ClassValidationDetails } from '../../../common/util/classValidator/ClassValidator';
+import { Code } from '../../../common/code/Code';
 
 describe('DeleteUserService', () => {
   let deleteUserService: DeleteUserUseCase;
@@ -61,5 +64,23 @@ describe('DeleteUserService', () => {
 
     expect(expectedDeleteUserDto).toEqual(resultDeleteUserDto);
     expect(deleteMethod).toHaveBeenCalledWith(mockUser.getEmail());
+  });
+
+  test('When user is not found, expect it throws exception', async () => {
+    jest
+      .spyOn(userRepository, 'getByEmail')
+      .mockImplementation(async () => undefined);
+    expect.hasAssertions();
+
+    try {
+      const userPort = 'email@email.com';
+      await deleteUserService.execute({ email: userPort });
+    } catch (error) {
+      const exception: Exception<ClassValidationDetails> =
+        error as Exception<ClassValidationDetails>;
+
+      expect(exception).toBeInstanceOf(Exception);
+      expect(exception.code).toBe(Code.ENTITY_NOT_FOUND_ERROR.code);
+    }
   });
 });
