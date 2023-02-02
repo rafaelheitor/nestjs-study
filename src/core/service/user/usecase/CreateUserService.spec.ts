@@ -1,16 +1,16 @@
-import { CreateUserUseCase } from '../../../domain/user/usecase/CreateUserUsecase';
-import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
-import { UserDITokens } from '../../../domain/user/di/UserDITokens';
+import { CreateUserUseCase } from '@core/domain/user/usecase/CreateUserUsecase';
+import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
+import { UserDITokens } from '@core/domain/user/di/UserDITokens';
 import { CreateUserService } from './CreateUserService';
-import { CreateUserPort } from '../../../domain/user/port/useCase/CreateUserPort';
-import { UserUsecaseDto } from '../../../domain/user/usecase/dto/UserUsecaseDto';
-import { User } from '../../../domain/user/entity/User';
-import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
-import { Exception } from '../../../common/exception/Exception';
-import { ClassValidationDetails } from '../../../common/util/classValidator/ClassValidator';
+import { CreateUserPort } from '@core/domain/user/port/useCase/CreateUserPort';
+import { UserUsecaseDto } from '@core/domain/user/usecase/dto/UserUsecaseDto';
+import { User } from '@core/domain/user/entity/User';
+import { UserRepositoryInMemory } from '@infrastructure/adapter/persistence/UserRepositoryAdapter';
+import { Exception } from '@core/common/exception/Exception';
+import { ClassValidationDetails } from '@core/common/util/classValidator/ClassValidator';
 import { v4 } from 'uuid';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Code } from '../../../common/code/Code';
+import { Code } from '@core/common/code/Code';
 
 describe('Tests CreateUserService', () => {
   let createUserService: CreateUserUseCase;

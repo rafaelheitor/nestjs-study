@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserDITokens } from '../../../domain/user/di/UserDITokens';
-import { User } from '../../../domain/user/entity/User';
-import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
-import { DeleteUserUseCase } from '../../../domain/user/usecase/DeleteUserUseCase';
-import { DeleteUserUseCaseDto } from '../../../domain/user/usecase/dto/DeleteUserUseCaseDto';
-import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
+import { UserDITokens } from '@core/domain/user/di/UserDITokens';
+import { User } from '@core/domain/user/entity/User';
+import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
+import { DeleteUserUseCase } from '@core/domain/user/usecase/DeleteUserUseCase';
+import { DeleteUserUseCaseDto } from '@core/domain/user/usecase/dto/DeleteUserUseCaseDto';
+import { UserRepositoryInMemory } from '@infrastructure/adapter/persistence/UserRepositoryAdapter';
 import { DeleteUserService } from './DeleteUserService';
-import { Exception } from '../../../common/exception/Exception';
-import { ClassValidationDetails } from '../../../common/util/classValidator/ClassValidator';
-import { Code } from '../../../common/code/Code';
+import { Exception } from '@core/common/exception/Exception';
+import { ClassValidationDetails } from '@core/common/util/classValidator/ClassValidator';
+import { Code } from '@core/common/code/Code';
 
 describe('DeleteUserService', () => {
   let deleteUserService: DeleteUserUseCase;

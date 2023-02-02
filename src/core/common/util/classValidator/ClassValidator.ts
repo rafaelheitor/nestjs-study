@@ -1,4 +1,4 @@
-import { Optional } from '../../type/CommonTypes';
+import { Optional } from '@core/common/type/CommonTypes';
 import { validate, ValidationError } from 'class-validator';
 
 export type ClassValidationDetails = {

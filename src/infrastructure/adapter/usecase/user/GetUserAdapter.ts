@@ -1,7 +1,7 @@
 import { Exclude, Expose, plainToClass } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { UseCaseValidatableAdapter } from 'src/Core/common/adapter/usecase/UseCaseValidatableAdapter';
-import { GetUserPort } from 'src/core/domain/user/port/useCase/GetUserPort';
+import { UseCaseValidatableAdapter } from '@core/common/adapter/usecase/UseCaseValidatableAdapter';
+import { GetUserPort } from '@core/domain/user/port/useCase/GetUserPort';
 
 @Exclude()
 export class GetUserAdapter

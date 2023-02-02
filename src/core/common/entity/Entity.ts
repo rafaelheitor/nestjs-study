@@ -1,6 +1,6 @@
-import { Code } from '../code/Code';
-import { Exception } from '../exception/Exception';
-import { Optional } from '../type/CommonTypes';
+import { Code } from '@core/common/code/Code';
+import { Exception } from '@core/common/exception/Exception';
+import { Optional } from '@core/common/type/CommonTypes';
 import {
   ClassValidationDetails,
   ClassValidator,

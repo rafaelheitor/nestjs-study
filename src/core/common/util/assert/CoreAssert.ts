@@ -1,4 +1,4 @@
-import { Optional, Nullable } from '../../type/CommonTypes';
+import { Optional, Nullable } from '@core/common/type/CommonTypes';
 
 export class CoreAssert {
   public static notEmpty<T>(value: Optional<Nullable<T>>, exception: Error): T {

@@ -1,5 +1,5 @@
-import { User } from '../../../core/domain/user/entity/User';
-import { UserRepositoryPort } from '../../../core/domain/user/port/persistence/userRepositoryPort';
+import { User } from '@core/domain/user/entity/User';
+import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
 
 export class UserRepositoryInMemory implements UserRepositoryPort {
   public users: User[];

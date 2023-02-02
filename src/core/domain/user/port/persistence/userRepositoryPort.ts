@@ -1,5 +1,4 @@
-import { User } from 'src/Core/Domain/user/entity/User';
-import { EditUserPort } from '../useCase/EditUserPort';
+import { User } from '@core/Domain/user/entity/User';
 
 export interface UserRepositoryPort {
   save(user: User): Promise<User>;

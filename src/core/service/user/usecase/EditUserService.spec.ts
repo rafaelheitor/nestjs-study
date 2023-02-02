@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserRepositoryInMemory } from '../../../../infrastructure/adapter/persistence/UserRepositoryAdapter';
+import { UserRepositoryInMemory } from '@infrastructure/adapter/persistence/UserRepositoryAdapter';
 import { v4 } from 'uuid';
-import { UserDITokens } from '../../../domain/user/di/UserDITokens';
-import { User } from '../../../domain/user/entity/User';
-import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
-import { EditUserPort } from '../../../domain/user/port/useCase/EditUserPort';
-import { EditUserUseCase } from '../../../domain/user/usecase/EditUserUseCase';
+import { UserDITokens } from '@core/domain/user/di/UserDITokens';
+import { User } from '@core/domain/user/entity/User';
+import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
+import { EditUserPort } from '@core/domain/user/port/useCase/EditUserPort';
+import { EditUserUseCase } from '@core/domain/user/usecase/EditUserUseCase';
 import { EditUserService } from './EditUserService';
-import { EditUserUseCaseDto } from '../../../domain/user/usecase/dto/EditUserUseCaseDto';
+import { EditUserUseCaseDto } from '@core/domain/user/usecase/dto/EditUserUseCaseDto';
 
 describe('EditUserService', () => {
   let userRepository: UserRepositoryPort;

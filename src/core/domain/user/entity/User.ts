@@ -1,9 +1,9 @@
-import { Entity } from '../../../common/entity/Entity';
+import { Entity } from '@core/common/entity/Entity';
 import { IsDate, IsEmail, IsOptional, IsString } from 'class-validator';
 import { v4 } from 'uuid';
 import { compare, genSalt, hash } from 'bcrypt';
-import { RemovableEntity } from '../../../common/entity/RemovableEntity';
-import { Nullable } from 'src/core/common/type/CommonTypes';
+import { RemovableEntity } from '@core/common/entity/RemovableEntity';
+import { Nullable } from '@core/common/type/CommonTypes';
 
 export type createUserPayload = {
   id?: string;

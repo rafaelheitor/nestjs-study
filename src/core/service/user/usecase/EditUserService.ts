@@ -1,11 +1,11 @@
-import { Code } from '../../../common/code/Code';
-import { Exception } from '../../../common/exception/Exception';
-import { CoreAssert } from '../../../common/util/assert/CoreAssert';
-import { User } from '../../../domain/user/entity/User';
-import { UserRepositoryPort } from '../../../domain/user/port/persistence/userRepositoryPort';
-import { EditUserPort } from '../../../domain/user/port/useCase/EditUserPort';
-import { EditUserUseCase } from '../../../domain/user/usecase/EditUserUseCase';
-import { EditUserUseCaseDto } from '../../../domain/user/usecase/dto/EditUserUseCaseDto';
+import { Code } from '@core/common/code/Code';
+import { Exception } from '@core/common/exception/Exception';
+import { CoreAssert } from '@core/common/util/assert/CoreAssert';
+import { User } from '@core/domain/user/entity/User';
+import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
+import { EditUserPort } from '@core/domain/user/port/useCase/EditUserPort';
+import { EditUserUseCase } from '@core/domain/user/usecase/EditUserUseCase';
+import { EditUserUseCaseDto } from '@core/domain/user/usecase/dto/EditUserUseCaseDto';
 
 export class EditUserService implements EditUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}

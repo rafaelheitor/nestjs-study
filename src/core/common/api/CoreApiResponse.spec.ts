@@ -1,5 +1,5 @@
 import { CoreApiResponse } from './CoreApiResponse';
-import { Code } from '../code/Code';
+import { Code } from '@core/common/code/Code';
 
 describe('CoreApiReponse', () => {
   describe('Success', () => {

@@ -1,4 +1,4 @@
-import { Code } from '../code/Code';
+import { Code } from '@core/common/code/Code';
 import { Exception } from './Exception';
 
 describe('Exception test', () => {
