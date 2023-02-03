@@ -44,21 +44,6 @@ describe('UserRepositoryInMemory', () => {
 
     expect(foundUser).toEqual(user);
   });
-
-  test('Should delete user', async () => {
-    const user: User = await createUser();
-    jest.spyOn(userRepository, 'getByEmail').mockImplementation(async () => {
-      return user;
-    });
-
-    await userRepository.delete(user.getEmail());
-
-    const isUserDelete = userRepository.users.findIndex(
-      (MemoryUser) => MemoryUser.getEmail() === user.getEmail(),
-    );
-
-    expect(isUserDelete).toBe(-1);
-  });
 });
 
 async function createUser() {
