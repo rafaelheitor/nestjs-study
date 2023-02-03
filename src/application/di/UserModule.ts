@@ -44,5 +44,6 @@ const useCaseProviders: Provider[] = [
 @Module({
   providers: [...persistenceProvider, ...useCaseProviders],
   controllers: [UserController],
+  exports: [UserDITokens.UserRepository],
 })
 export class UserModule {}
