@@ -1,11 +1,11 @@
 import { Module, Provider } from '@nestjs/common';
-import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
-import { UserRepositoryInMemory } from 'src/infrastructure/adapter/persistence/UserRepositoryAdapter';
-import { CreateUserService } from 'src/Core/service/user/usecase/CreateUserService';
-import { UserController } from '../api/http-rest/controller/UserController';
-import { GetUserService } from 'src/core/service/user/usecase/GetUserService';
-import { EditUserService } from 'src/core/service/user/usecase/EditUserService';
-import { DeleteUserService } from 'src/core/service/user/usecase/DeleteUserService';
+import { UserDITokens } from '@core/domain/user/di/UserDITokens';
+import { UserRepositoryInMemory } from '@infrastructure/adapter/persistence/UserRepositoryAdapter';
+import { CreateUserService } from '@core/service/user/usecase/CreateUserService';
+import { UserController } from '@application/api/http-rest/controller/UserController';
+import { GetUserService } from '@core/service/user/usecase/GetUserService';
+import { EditUserService } from '@core/service/user/usecase/EditUserService';
+import { DeleteUserService } from '@core/service/user/usecase/DeleteUserService';
 
 const persistenceProvider: Provider[] = [
   {

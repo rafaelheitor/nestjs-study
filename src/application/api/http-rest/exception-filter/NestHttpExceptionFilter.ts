@@ -6,9 +6,9 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { CoreApiResponse } from 'src/core/common/api/CoreApiResponse';
-import { Code } from 'src/core/common/code/Code';
-import { Exception } from 'src/core/common/exception/Exception';
+import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
+import { Code } from '@core/common/code/Code';
+import { Exception } from '@core/common/exception/Exception';
 
 @Catch()
 export class NestHttpExceptionFilter implements ExceptionFilter {

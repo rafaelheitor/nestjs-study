@@ -7,18 +7,18 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { CoreApiResponse } from 'src/core/common/api/CoreApiResponse';
-import { UserDITokens } from 'src/Core/domain/user/di/UserDITokens';
-import { CreateUserUseCase } from 'src/Core/Domain/user/usecase/CreateUserUsecase';
-import { DeleteUserUseCase } from 'src/core/domain/user/usecase/DeleteUserUseCase';
-import { EditUserUseCaseDto } from 'src/core/domain/user/usecase/dto/EditUserUseCaseDto';
-import { UserUsecaseDto } from 'src/Core/Domain/user/usecase/dto/UserUsecaseDto';
-import { EditUserUseCase } from 'src/core/domain/user/usecase/EditUserUseCase';
-import { GetUserUseCase } from 'src/core/domain/user/usecase/getUserUseCase';
-import { CreateUserAdapter } from 'src/infrastructure/adapter/usecase/user/CreateUserAdapter';
-import { DeleteUserAdapter } from 'src/infrastructure/adapter/usecase/user/DeleteUserAdapter';
-import { EditUserAdapter } from 'src/infrastructure/adapter/usecase/user/EditUserAdapter';
-import { GetUserAdapter } from 'src/infrastructure/adapter/usecase/user/GetUserAdapter';
+import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
+import { UserDITokens } from '@core/domain/user/di/UserDITokens';
+import { CreateUserUseCase } from '@core/Domain/user/usecase/CreateUserUsecase';
+import { DeleteUserUseCase } from '@core/domain/user/usecase/DeleteUserUseCase';
+import { EditUserUseCaseDto } from '@core/domain/user/usecase/dto/EditUserUseCaseDto';
+import { UserUsecaseDto } from '@core/Domain/user/usecase/dto/UserUsecaseDto';
+import { EditUserUseCase } from '@core/domain/user/usecase/EditUserUseCase';
+import { GetUserUseCase } from '@core/domain/user/usecase/getUserUseCase';
+import { CreateUserAdapter } from '@infrastructure/adapter/usecase/user/CreateUserAdapter';
+import { DeleteUserAdapter } from '@infrastructure/adapter/usecase/user/DeleteUserAdapter';
+import { EditUserAdapter } from '@infrastructure/adapter/usecase/user/EditUserAdapter';
+import { GetUserAdapter } from '@infrastructure/adapter/usecase/user/GetUserAdapter';
 
 @Controller('users')
 export class UserController {
