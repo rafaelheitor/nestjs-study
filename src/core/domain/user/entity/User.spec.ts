@@ -1,3 +1,4 @@
+import { UserRoles } from '@core/common/enums/UserEnums';
 import { v4 } from 'uuid';
 import { createUserPayload, User } from './User';
 
@@ -17,6 +18,7 @@ describe('Tests user entity', () => {
 
       expect(user.getName()).toBe(expectedUser.name);
       expect(user.getEmail()).toBe(expectedUser.email);
+      expect(user.getRole()).toBe(UserRoles.CLIENT);
       expect(user.getPassword() == expectedUser.password).toBeFalsy();
     });
 
@@ -32,11 +34,13 @@ describe('Tests user entity', () => {
         password: expectedUser.password,
         createdAt: customCreatedAt,
         removedAt: customRemovedAt,
+        role: UserRoles.ADMIN,
       };
       const user: User = await User.new(customUser);
 
       expect(user.getId()).toBe(customUser.id);
       expect(user.getCreatedAt()).toBe(customUser.createdAt);
+      expect(user.getRole()).toBe(customUser.role);
     });
   });
 

@@ -1,9 +1,10 @@
 import { Entity } from '@core/common/entity/Entity';
-import { IsDate, IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 import { v4 } from 'uuid';
 import { compare, genSalt, hash } from 'bcrypt';
 import { RemovableEntity } from '@core/common/entity/RemovableEntity';
 import { Nullable } from '@core/common/type/CommonTypes';
+import { UserRoles } from '@core/common/enums/UserEnums';
 
 export type createUserPayload = {
   id?: string;
@@ -13,6 +14,7 @@ export type createUserPayload = {
   createdAt?: Date;
   removedAt?: Date;
   editedAt?: Date;
+  role?: UserRoles;
 };
 
 export type editUserPayload = {
@@ -41,6 +43,9 @@ export class User extends Entity<string> implements RemovableEntity {
   @IsOptional()
   private editedAt: Nullable<Date>;
 
+  @IsEnum(UserRoles)
+  private readonly role: UserRoles;
+
   private constructor(payload: createUserPayload) {
     super();
     this.id = payload.id || v4();
@@ -50,6 +55,7 @@ export class User extends Entity<string> implements RemovableEntity {
     this.createdAt = payload.createdAt || new Date();
     this.removedAt = payload.removedAt || null;
     this.editedAt = payload.editedAt || null;
+    this.role = payload.role || UserRoles.CLIENT;
   }
 
   public async hashPassword(): Promise<void> {
@@ -82,6 +88,10 @@ export class User extends Entity<string> implements RemovableEntity {
 
   public getPassword(): string {
     return this.password;
+  }
+
+  public getRole() {
+    return this.role;
   }
 
   public async edit(payload: editUserPayload): Promise<User> {
