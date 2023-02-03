@@ -1,5 +1,5 @@
 import { Exclude, Expose, plainToClass } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsEmail } from 'class-validator';
 import { UseCaseValidatableAdapter } from '@core/common/adapter/usecase/UseCaseValidatableAdapter';
 import { GetUserPort } from '@core/domain/user/port/useCase/GetUserPort';
 
@@ -9,7 +9,7 @@ export class GetUserAdapter
   implements GetUserPort
 {
   @Expose()
-  @IsString()
+  @IsEmail()
   public email: string;
 
   public static async new(payload: GetUserPort): Promise<GetUserAdapter> {
