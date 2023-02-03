@@ -18,8 +18,8 @@ export class CoreApiResponse<Tdata> {
   }
 
   public static success<Tdata>(
-    message?: string,
     data?: Tdata,
+    message?: string,
   ): CoreApiResponse<Tdata> {
     const resultCode: number = Code.SUCCESS.code;
 

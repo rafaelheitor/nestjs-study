@@ -48,7 +48,7 @@ export class UserController {
       adapter,
     );
 
-    return CoreApiResponse.success('User Created', createdUser);
+    return CoreApiResponse.success(createdUser, 'User Created');
   }
 
   @Get('user')
@@ -58,7 +58,7 @@ export class UserController {
     });
 
     const user: UserUsecaseDto = await this.getUserUseCase.execute(adapter);
-    return CoreApiResponse.success('User found', user);
+    return CoreApiResponse.success(user, 'User found');
   }
 
   @Patch('edit')
@@ -73,7 +73,7 @@ export class UserController {
       adapter,
     );
 
-    return CoreApiResponse.success('user was Edited successfully', editedUser);
+    return CoreApiResponse.success(editedUser, 'user was Edited successfully');
   }
 
   @Delete('delete')
