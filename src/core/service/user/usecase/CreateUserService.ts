@@ -6,6 +6,7 @@ import { CreateUserUseCase } from '@core/domain/user/usecase/CreateUserUsecase';
 import { UserUsecaseDto } from '@core/domain/user/usecase/dto/UserUsecaseDto';
 import { Code } from '@core/common/code/Code';
 import { CoreAssert } from '@core/common/util/assert/CoreAssert';
+import { UserRoles } from '@core/common/enums/UserEnums';
 
 export class CreateUserService implements CreateUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
@@ -16,6 +17,7 @@ export class CreateUserService implements CreateUserUseCase {
       name: port.name,
       password: port.password,
       email: port.email,
+      role: port.role,
     });
 
     const alreadyUser = !!(await this.userRepository.getByEmail(port.email));

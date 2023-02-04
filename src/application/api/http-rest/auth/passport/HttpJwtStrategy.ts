@@ -5,7 +5,7 @@ import { User } from '@core/domain/user/entity/User';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
-import { Strategy } from 'passport-local';
+import { Strategy } from 'passport-jwt';
 import { HttpAuthService } from '../HttpAuthService';
 import { HttpJwtPayload, HttpUserPayload } from '../type/HttpAuthTypes';
 

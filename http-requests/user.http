@@ -6,9 +6,10 @@ POST http://localhost:3333/users/new
 content-type: application/json
 
 {
-    "name": "João",
-    "email": "joao@email.com",
-    "password": "Joao@123"
+    "name": "rafael",
+    "email": "rafael@email.com",
+    "password": "Rafael@123",
+    "role": "ADMIN"
 }
 
 ###
@@ -33,6 +34,7 @@ Content-Type: application/json
 
 DELETE  http://localhost:3333/users/delete
 Content-Type: application/json
+x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFlbEBlbWFpbC5jb20iLCJpYXQiOjE2NzU0NzYwMTEsImV4cCI6MTY3NTQ3OTYxMX0.PWICsMuEq4UcHiUY6lyMD4WLD7wWG-qbz0pww2i6xTA
 
 {
     "email": "joao@email.com"
@@ -44,6 +46,6 @@ POST http://localhost:3333/auth/login
 Content-Type: application/json
 
 {
-    "email": "joao@email.com",
-    "password": "Joao@123"
+    "email": "rafael@email.com",
+    "password": "Rafael@123"
 }

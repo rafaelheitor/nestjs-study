@@ -19,6 +19,8 @@ import { CreateUserAdapter } from '@infrastructure/adapter/usecase/user/CreateUs
 import { DeleteUserAdapter } from '@infrastructure/adapter/usecase/user/DeleteUserAdapter';
 import { EditUserAdapter } from '@infrastructure/adapter/usecase/user/EditUserAdapter';
 import { GetUserAdapter } from '@infrastructure/adapter/usecase/user/GetUserAdapter';
+import { HttpAuth } from '../auth/decorator/HttpAuth';
+import { UserRoles } from '@core/common/enums/UserEnums';
 
 @Controller('users')
 export class UserController {
@@ -42,6 +44,7 @@ export class UserController {
       name: body.name,
       email: body.email,
       password: body.password,
+      role: body.role,
     });
 
     const createdUser: UserUsecaseDto = await this.createUserUseCase.execute(
@@ -76,6 +79,7 @@ export class UserController {
     return CoreApiResponse.success(editedUser, 'user was Edited successfully');
   }
 
+  @HttpAuth(UserRoles.ADMIN)
   @Delete('delete')
   public async deleteUser(@Body() body) {
     const adapter: DeleteUserAdapter = await DeleteUserAdapter.new({
