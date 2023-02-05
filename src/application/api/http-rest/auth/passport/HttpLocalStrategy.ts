@@ -1,7 +1,7 @@
 import { Code } from '@core/common/code/Code';
-import { UserRoles } from '@core/common/enums/UserEnums';
 import { Exception } from '@core/common/exception/Exception';
 import { CoreAssert } from '@core/common/util/assert/CoreAssert';
+import { config } from '@infrastructure/config/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
@@ -12,8 +12,8 @@ import { HttpUserPayload } from '../type/HttpAuthTypes';
 export class HttpLocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: HttpAuthService) {
     super({
-      usernameField: 'email',
-      passwordField: 'password',
+      usernameField: config().ApiServerConfig.API_LOGIN_USERNAME_FIELD,
+      passwordField: config().ApiServerConfig.API_LOGIN_PASSWORD_FIELD,
     });
   }
 

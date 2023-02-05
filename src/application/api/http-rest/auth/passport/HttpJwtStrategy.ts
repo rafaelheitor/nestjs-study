@@ -2,6 +2,7 @@ import { Code } from '@core/common/code/Code';
 import { Exception } from '@core/common/exception/Exception';
 import { CoreAssert } from '@core/common/util/assert/CoreAssert';
 import { User } from '@core/domain/user/entity/User';
+import { config } from '@infrastructure/config/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
@@ -13,9 +14,11 @@ import { HttpJwtPayload, HttpUserPayload } from '../type/HttpAuthTypes';
 export class HttpJwtStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: HttpAuthService) {
     super({
-      jwtFromRequest: ExtractJwt.fromHeader('x-api-token'),
+      jwtFromRequest: ExtractJwt.fromHeader(
+        config().ApiServerConfig.API_ACCESS_TOKEN_HEADER,
+      ),
       ignoreExpiration: false,
-      secretOrKey: 'ASJHASKASHAKSJHASJHKASAKJSHA',
+      secretOrKey: config().ApiServerConfig.ACCESS_TOKEN_SECRET,
     });
   }
 
