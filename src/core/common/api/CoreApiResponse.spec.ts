@@ -19,8 +19,8 @@ describe('CoreApiReponse', () => {
       const customData: Record<string, unknown> = { result: customMessage };
 
       const response: CoreApiResponse<unknown> = CoreApiResponse.success(
-        customMessage,
         customData,
+        customMessage,
       );
 
       expect(response.code).toBe(Code.SUCCESS.code);
