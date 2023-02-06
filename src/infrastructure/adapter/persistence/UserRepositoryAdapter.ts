@@ -2,10 +2,14 @@ import { User } from '@core/domain/user/entity/User';
 import { UserRepositoryPort } from '@core/domain/user/port/persistence/userRepositoryPort';
 
 export class UserRepositoryInMemory implements UserRepositoryPort {
-  public users: User[];
+  private static instance: UserRepositoryInMemory | null = null;
+  public users: User[] = [];
 
-  constructor() {
-    this.users = [];
+  static async getInstance(): Promise<UserRepositoryInMemory> {
+    if (UserRepositoryInMemory.instance === null) {
+      UserRepositoryInMemory.instance = new UserRepositoryInMemory();
+    }
+    return UserRepositoryInMemory.instance;
   }
 
   async save(user: User): Promise<User> {
