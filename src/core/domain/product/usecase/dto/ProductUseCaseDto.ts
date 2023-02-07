@@ -21,6 +21,9 @@ export class ProductUseCaseDto {
   @Expose()
   public createdAt: Date;
 
+  @Expose()
+  public editedAt: Date;
+
   public static newFromProduct(product: Product) {
     return plainToClass(ProductUseCaseDto, product);
   }

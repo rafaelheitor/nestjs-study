@@ -15,6 +15,7 @@ export class ProductRepositoryInMemory implements ProductRepositoryPort {
 
   async saveProduct(product: Product): Promise<Product> {
     const savedProduct: Product = await Product.new({
+      id: product.getId(),
       name: product.getName(),
       image: product.getImage(),
       price: product.getPrice(),
