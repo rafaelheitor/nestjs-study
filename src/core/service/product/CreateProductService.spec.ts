@@ -62,13 +62,24 @@ describe('CreateProductService', () => {
     const resultProductDto: ProductUseCaseDto =
       await createProductUseCase.execute(productPort);
 
+    const resultAddedProduct: Product = jest.spyOn(
+      productRepository,
+      'saveProduct',
+    ).mock.calls[0][0];
+
     Reflect.set(
       expectedProductDto,
       'createdAt',
       expectedProduct.getCreatedAt(),
     );
     Reflect.set(resultProductDto, 'createdAt', expectedProduct.getCreatedAt());
+    Reflect.set(
+      resultAddedProduct,
+      'createdAt',
+      expectedProduct.getCreatedAt(),
+    );
 
     expect(expectedProductDto).toStrictEqual(resultProductDto);
+    expect(expectedProduct).toStrictEqual(resultAddedProduct);
   });
 });
