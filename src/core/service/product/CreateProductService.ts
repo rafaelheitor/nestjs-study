@@ -9,7 +9,6 @@ export class CreateProductService implements CreateProductUseCase {
 
   async execute(port?: CreateProductPort): Promise<ProductUseCaseDto> {
     const product: Product = await Product.new({
-      id: port.id,
       name: port.name,
       image: port.image,
       price: port.price,
