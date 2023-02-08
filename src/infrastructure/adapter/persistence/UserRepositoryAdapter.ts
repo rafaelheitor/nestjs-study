@@ -13,14 +13,9 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
   }
 
   async save(user: User): Promise<User> {
-    const savedUser: User = await User.new({
-      id: user.id,
-      name: user.getName(),
-      email: user.getEmail(),
-      password: user.getPassword(),
-    });
+    const savedUser: User = user;
 
-    this.users.push(user);
+    this.users.push(savedUser);
     return savedUser;
   }
 
