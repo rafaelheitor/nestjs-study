@@ -3,6 +3,7 @@ import { IsEmail, IsIn, IsOptional, IsString, Matches } from 'class-validator';
 import { UseCaseValidatableAdapter } from '@core/common/adapter/usecase/UseCaseValidatableAdapter';
 import { CreateUserPort } from '@core/Domain/user/port/useCase/CreateUserPort';
 import { UserRoles } from '@core/common/enums/UserEnums';
+import { Regex } from '@core/common/util/regex/Regex';
 
 @Exclude()
 export class CreateUserAdapter
@@ -20,7 +21,7 @@ export class CreateUserAdapter
 
   @Expose()
   @IsString()
-  @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/, {
+  @Matches(Regex.PasswordRegex, {
     message: 'Password must contain letters numbers and special characteres',
   })
   public password: string;
