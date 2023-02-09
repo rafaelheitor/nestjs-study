@@ -4,9 +4,11 @@ import { ProductRepositoryPort } from '@core/domain/product/port/persistence/Pro
 import { CreateProductUseCase } from '@core/domain/product/usecase/CreateProductUseCase';
 import { ProductUseCaseDto } from '@core/domain/product/usecase/dto/ProductUseCaseDto';
 import { EditProductUseCase } from '@core/domain/product/usecase/EditProductUseCase';
+import { GetProductUseCase } from '@core/domain/product/usecase/GetProductUseCase';
 import { CreateProductAdapter } from '@infrastructure/adapter/usecase/product/CreateProductAdapter';
 import { EditProductAdapter } from '@infrastructure/adapter/usecase/product/EditProductAdapter';
-import { Body, Controller, Inject, Patch, Post } from '@nestjs/common';
+import { GetProductAdapter } from '@infrastructure/adapter/usecase/product/GetProductAdapter';
+import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common';
 
 @Controller('product')
 export class ProductController {
@@ -16,6 +18,9 @@ export class ProductController {
 
     @Inject(ProductDITokens.EditProductUseCase)
     private readonly editProductUseCase: EditProductUseCase,
+
+    @Inject(ProductDITokens.GetProductUseCase)
+    private readonly getProductUseCase: GetProductUseCase,
   ) {}
 
   @Post('new')
@@ -47,5 +52,16 @@ export class ProductController {
       await this.editProductUseCase.execute(adapter);
 
     return CoreApiResponse.success(editedProduct, 'Product edited successfuly');
+  }
+
+  @Get('product')
+  public async getProduct(@Body() body) {
+    const adapter: GetProductAdapter = await GetProductAdapter.new({
+      productId: body.productId,
+    });
+
+    const product = await this.getProductUseCase.execute(adapter);
+
+    return CoreApiResponse.success(product, 'Product Found');
   }
 }

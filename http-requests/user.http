@@ -55,7 +55,7 @@ POST http://localhost:3333/product/new
 Content-Type: application/json
 
 {
-    "name": "Test Product",
+    "name": "third Test Product",
     "image": "url/image",
     "price": 50,
     "quantity": 10
@@ -71,4 +71,11 @@ Content-Type: application/json
     "image": "new url/image",
     "price": 80,
     "quantity": 2
+}
+###
+GET   http://localhost:3333/product/product
+Content-Type: application/json
+
+{
+    "productId": "89d5483c-64be-42b9-85c3-65f2634134d4"
 }
