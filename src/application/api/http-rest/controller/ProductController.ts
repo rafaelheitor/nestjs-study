@@ -1,4 +1,5 @@
 import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
+import { UserRoles } from '@core/common/enums/UserEnums';
 import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 import { ProductRepositoryPort } from '@core/domain/product/port/persistence/ProductRepositoryPort';
 import { CreateProductUseCase } from '@core/domain/product/usecase/CreateProductUseCase';
@@ -9,6 +10,7 @@ import { CreateProductAdapter } from '@infrastructure/adapter/usecase/product/Cr
 import { EditProductAdapter } from '@infrastructure/adapter/usecase/product/EditProductAdapter';
 import { GetProductAdapter } from '@infrastructure/adapter/usecase/product/GetProductAdapter';
 import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common';
+import { HttpAuth } from '../auth/decorator/HttpAuth';
 
 @Controller('product')
 export class ProductController {
@@ -23,6 +25,7 @@ export class ProductController {
     private readonly getProductUseCase: GetProductUseCase,
   ) {}
 
+  @HttpAuth(UserRoles.ADMIN)
   @Post('new')
   public async createProduct(@Body() body) {
     const adapter: CreateProductAdapter = await CreateProductAdapter.new({
@@ -38,6 +41,7 @@ export class ProductController {
     return CoreApiResponse.success(createdProduct, 'Product created');
   }
 
+  @HttpAuth(UserRoles.ADMIN)
   @Patch('edit')
   public async edit(@Body() body) {
     const adapter: EditProductAdapter = await EditProductAdapter.new({
