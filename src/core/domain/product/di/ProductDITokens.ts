@@ -4,6 +4,9 @@ export class ProductDITokens {
     'CreateProductUseCase',
   );
 
+  public static readonly EditProductUseCase: unique symbol =
+    Symbol('EditProductUseCase');
+
   //Repositories
   public static readonly ProductRepository: unique symbol =
     Symbol('ProductRepository');

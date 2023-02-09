@@ -49,3 +49,26 @@ Content-Type: application/json
     "email": "rafael@email.com",
     "password": "Rafael@123"
 }
+
+### Product
+POST http://localhost:3333/product/new
+Content-Type: application/json
+
+{
+    "name": "Test Product",
+    "image": "url/image",
+    "price": 50,
+    "quantity": 10
+}
+
+###
+PATCH  http://localhost:3333/product/edit
+Content-Type: application/json
+
+{
+    "productId": "b7ab3f92-3335-4c64-b885-d9d2e82234d9",
+    "name": "new Test Product",
+    "image": "new url/image",
+    "price": 80,
+    "quantity": 2
+}
