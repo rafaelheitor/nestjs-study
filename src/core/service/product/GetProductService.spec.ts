@@ -10,6 +10,7 @@ import { Code } from '@core/common/code/Code';
 import { v4 } from 'uuid';
 import { ClassValidationDetails } from '@core/common/util/classValidator/ClassValidator';
 import { GetProductService } from './GetProductService';
+import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 
 describe('GetProductService', () => {
   let getProductsUseCase: GetProductUseCase;
@@ -19,19 +20,23 @@ describe('GetProductService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
-          provide: 'ProductRepository',
+          provide: ProductDITokens.ProductRepository,
           useClass: ProductRepositoryInMemory,
         },
         {
-          provide: 'GetProductUseCase',
+          provide: ProductDITokens.GetProductUseCase,
           useFactory: (productRepository) =>
             new GetProductService(productRepository),
-          inject: ['ProductRepository'],
+          inject: [ProductDITokens.ProductRepository],
         },
       ],
     }).compile();
-    getProductsUseCase = module.get<GetProductUseCase>('GetProductUseCase');
-    productRepository = module.get<ProductRepositoryPort>('ProductRepository');
+    getProductsUseCase = module.get<GetProductUseCase>(
+      ProductDITokens.GetProductUseCase,
+    );
+    productRepository = module.get<ProductRepositoryPort>(
+      ProductDITokens.ProductRepository,
+    );
   });
 
   test('Should find product in repository', async () => {

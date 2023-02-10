@@ -10,6 +10,7 @@ import { ProductRepositoryInMemory } from '@infrastructure/adapter/persistence/P
 import { EditProductService } from './EditProductService';
 import { Test, TestingModule } from '@nestjs/testing';
 import { v4 } from 'uuid';
+import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 
 describe('EditProductService', () => {
   let editProductUseCase: EditProductUseCase;
@@ -19,20 +20,24 @@ describe('EditProductService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
-          provide: 'ProductRepository',
+          provide: ProductDITokens.ProductRepository,
           useClass: ProductRepositoryInMemory,
         },
         {
-          provide: 'EditProductUseCase',
+          provide: ProductDITokens.EditProductUseCase,
           useFactory: (productRepository) =>
             new EditProductService(productRepository),
-          inject: ['ProductRepository'],
+          inject: [ProductDITokens.ProductRepository],
         },
       ],
     }).compile();
 
-    editProductUseCase = module.get<EditProductUseCase>('EditProductUseCase');
-    productRepository = module.get<ProductRepositoryPort>('ProductRepository');
+    editProductUseCase = module.get<EditProductUseCase>(
+      ProductDITokens.EditProductUseCase,
+    );
+    productRepository = module.get<ProductRepositoryPort>(
+      ProductDITokens.ProductRepository,
+    );
   });
 
   test('Should Edit product', async () => {

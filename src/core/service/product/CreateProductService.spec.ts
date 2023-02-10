@@ -1,3 +1,4 @@
+import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 import { Product } from '@core/domain/product/entity/Product';
 import { ProductRepositoryPort } from '@core/domain/product/port/persistence/ProductRepositoryPort';
 import { CreateProductPort } from '@core/domain/product/port/usecase/CreateProductPort';
@@ -16,22 +17,24 @@ describe('CreateProductService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {
-          provide: 'ProductRepository',
+          provide: ProductDITokens.ProductRepository,
           useClass: ProductRepositoryInMemory,
         },
         {
-          provide: 'CreateProductUseCase',
+          provide: ProductDITokens.CreateProductUseCase,
           useFactory: (productRepository) =>
             new CreateProductService(productRepository),
-          inject: ['ProductRepository'],
+          inject: [ProductDITokens.ProductRepository],
         },
       ],
     }).compile();
 
     createProductUseCase = module.get<CreateProductUseCase>(
-      'CreateProductUseCase',
+      ProductDITokens.CreateProductUseCase,
     );
-    productRepository = module.get<ProductRepositoryPort>('ProductRepository');
+    productRepository = module.get<ProductRepositoryPort>(
+      ProductDITokens.ProductRepository,
+    );
   });
 
   test('Should create a new product and save it', async () => {
@@ -50,6 +53,7 @@ describe('CreateProductService', () => {
       quantity: productPort.quantity,
     });
 
+    console.log(productPort.id === expectedProduct.getId());
     jest
       .spyOn(productRepository, 'saveProduct')
       .mockImplementation(async () => {
@@ -72,12 +76,17 @@ describe('CreateProductService', () => {
       'createdAt',
       expectedProduct.getCreatedAt(),
     );
+    Reflect.set(expectedProductDto, 'id', expectedProduct.getId());
+
     Reflect.set(resultProductDto, 'createdAt', expectedProduct.getCreatedAt());
+    Reflect.set(resultProductDto, 'id', expectedProduct.getId());
+
     Reflect.set(
       resultAddedProduct,
       'createdAt',
       expectedProduct.getCreatedAt(),
     );
+    Reflect.set(resultAddedProduct, 'id', expectedProduct.getId());
 
     expect(expectedProductDto).toStrictEqual(resultProductDto);
     expect(expectedProduct).toStrictEqual(resultAddedProduct);

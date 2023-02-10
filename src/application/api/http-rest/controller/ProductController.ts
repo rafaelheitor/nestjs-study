@@ -42,7 +42,9 @@ export class ProductController {
 
   @HttpAuth(UserRoles.ADMIN)
   @Post('new')
-  public async createProduct(@Body() body) {
+  public async createProduct(
+    @Body() body,
+  ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: CreateProductAdapter = await CreateProductAdapter.new({
       name: body.name,
       image: body.image,
@@ -58,7 +60,7 @@ export class ProductController {
 
   @HttpAuth(UserRoles.ADMIN)
   @Patch('edit')
-  public async edit(@Body() body) {
+  public async edit(@Body() body): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: EditProductAdapter = await EditProductAdapter.new({
       productId: body.productId,
       name: body.name,
@@ -74,7 +76,9 @@ export class ProductController {
   }
 
   @Get('product')
-  public async getProduct(@Body() body) {
+  public async getProduct(
+    @Body() body,
+  ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: GetProductAdapter = await GetProductAdapter.new({
       productId: body.productId,
     });

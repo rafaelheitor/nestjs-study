@@ -6,9 +6,9 @@ POST http://localhost:3333/users/new
 content-type: application/json
 
 {
-    "name": "rafael",
-    "email": "rafael@email.com",
-    "password": "Rafael@123",
+    "name": "joao",
+    "email": "joao@email.com",
+    "password": "Joao@123",
     "role": "ADMIN"
 }
 
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 DELETE  http://localhost:3333/users/delete
 Content-Type: application/json
-x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFlbEBlbWFpbC5jb20iLCJpYXQiOjE2NzU0NzYwMTEsImV4cCI6MTY3NTQ3OTYxMX0.PWICsMuEq4UcHiUY6lyMD4WLD7wWG-qbz0pww2i6xTA
+x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY29tIiwiaWF0IjoxNjc1OTg4ODY0LCJleHAiOjE2NzU5OTI0NjR9.CdYQ0GK0LEdZKffPLkPbwsJEIym-dIm17imW3Y4rzBI
 
 {
     "email": "joao@email.com"
@@ -46,16 +46,17 @@ POST http://localhost:3333/auth/login
 Content-Type: application/json
 
 {
-    "email": "rafael@email.com",
-    "password": "Rafael@123"
+   "email": "joao@email.com",
+    "password": "Joao@123"
 }
 
 ### Product
 POST http://localhost:3333/product/new
 Content-Type: application/json
+x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY29tIiwiaWF0IjoxNjc1OTg4ODY0LCJleHAiOjE2NzU5OTI0NjR9.CdYQ0GK0LEdZKffPLkPbwsJEIym-dIm17imW3Y4rzBI
 
 {
-    "name": "third Test Product",
+    "name": "Test Product",
     "image": "url/image",
     "price": 50,
     "quantity": 10
@@ -69,7 +70,7 @@ Content-Type: application/json
     "productId": "b7ab3f92-3335-4c64-b885-d9d2e82234d9",
     "name": "new Test Product",
     "image": "new url/image",
-    "price": 80,
+    "price": "80",
     "quantity": 2
 }
 ###
@@ -77,5 +78,8 @@ GET   http://localhost:3333/product/product
 Content-Type: application/json
 
 {
-    "productId": "89d5483c-64be-42b9-85c3-65f2634134d4"
+    "productId": "c256b486-64da-45d0-896b-ab3a2997db7e"
 }
+###
+DELETE    http://localhost:3333/product/delete/c256b486-64da-45d0-896b-ab3a2997db7e
+Content-Type: application/json
