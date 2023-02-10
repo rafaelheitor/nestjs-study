@@ -3,13 +3,25 @@ import { UserRoles } from '@core/common/enums/UserEnums';
 import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 import { ProductRepositoryPort } from '@core/domain/product/port/persistence/ProductRepositoryPort';
 import { CreateProductUseCase } from '@core/domain/product/usecase/CreateProductUseCase';
+import { DeleteProductUseCase } from '@core/domain/product/usecase/DeleteProductUseCase';
+import { DeleteProductUseCaseDto } from '@core/domain/product/usecase/dto/DeleteProductUseCaseDto';
 import { ProductUseCaseDto } from '@core/domain/product/usecase/dto/ProductUseCaseDto';
 import { EditProductUseCase } from '@core/domain/product/usecase/EditProductUseCase';
 import { GetProductUseCase } from '@core/domain/product/usecase/GetProductUseCase';
 import { CreateProductAdapter } from '@infrastructure/adapter/usecase/product/CreateProductAdapter';
+import { DeleteProductAdapter } from '@infrastructure/adapter/usecase/product/DeleteProductAdapter';
 import { EditProductAdapter } from '@infrastructure/adapter/usecase/product/EditProductAdapter';
 import { GetProductAdapter } from '@infrastructure/adapter/usecase/product/GetProductAdapter';
-import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { HttpAuth } from '../auth/decorator/HttpAuth';
 
 @Controller('product')
@@ -23,6 +35,9 @@ export class ProductController {
 
     @Inject(ProductDITokens.GetProductUseCase)
     private readonly getProductUseCase: GetProductUseCase,
+
+    @Inject(ProductDITokens.DeleteProductUseCase)
+    private readonly deleteProductUseCase: DeleteProductUseCase,
   ) {}
 
   @HttpAuth(UserRoles.ADMIN)
@@ -67,5 +82,19 @@ export class ProductController {
     const product = await this.getProductUseCase.execute(adapter);
 
     return CoreApiResponse.success(product, 'Product Found');
+  }
+
+  @HttpAuth(UserRoles.ADMIN)
+  @Delete('/delete/:productId')
+  public async deleteProduct(
+    @Param() param,
+  ): Promise<CoreApiResponse<DeleteProductUseCaseDto>> {
+    const adapter: DeleteProductAdapter = await DeleteProductAdapter.new({
+      productId: param.productId,
+    });
+    const deletedProduct: DeleteProductUseCaseDto =
+      await this.deleteProductUseCase.execute(adapter);
+
+    return CoreApiResponse.success(deletedProduct);
   }
 }

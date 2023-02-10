@@ -1,6 +1,7 @@
 import { ProductController } from '@application/api/http-rest/controller/ProductController';
 import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 import { CreateProductService } from '@core/service/product/CreateProductService';
+import { DeleteProductService } from '@core/service/product/DeleteProductService';
 import { EditProductService } from '@core/service/product/EditProductService';
 import { GetProductService } from '@core/service/product/GetProductService';
 import { ProductRepositoryInMemory } from '@infrastructure/adapter/persistence/ProductRepositoryAdapter';
@@ -22,6 +23,12 @@ const useCaseProviders: Provider[] = [
   {
     provide: ProductDITokens.GetProductUseCase,
     useFactory: (productRepository) => new GetProductService(productRepository),
+    inject: [ProductDITokens.ProductRepository],
+  },
+  {
+    provide: ProductDITokens.DeleteProductUseCase,
+    useFactory: (productRepository) =>
+      new DeleteProductService(productRepository),
     inject: [ProductDITokens.ProductRepository],
   },
 ];
