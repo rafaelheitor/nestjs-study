@@ -11,13 +11,13 @@ export class EditUserService implements EditUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async execute(port?: EditUserPort): Promise<EditUserUseCaseDto> {
-    const foundUser: User = await this.userRepository.getByEmail(port.email);
+    const foundUser: User = await this.userRepository.getById(port.id);
 
     CoreAssert.isFalse(
       !foundUser,
       Exception.new({
         code: Code.ENTITY_NOT_FOUND_ERROR,
-        overrideMessage: `User ${port.email} was not found`,
+        overrideMessage: `User ${port.id} was not found`,
       }),
     );
 

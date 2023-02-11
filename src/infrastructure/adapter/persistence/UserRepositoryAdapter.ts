@@ -19,6 +19,10 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
     return savedUser;
   }
 
+  async getById(id: string): Promise<User> {
+    return this.users.find((user) => user.getId() === id);
+  }
+
   async edit(requestUser: User): Promise<User> {
     this.delete(requestUser.getEmail());
     const savedUser = this.save(requestUser);

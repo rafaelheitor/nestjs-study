@@ -1,3 +1,3 @@
 export interface DeleteUserPort {
-  email: string;
+  id: string;
 }

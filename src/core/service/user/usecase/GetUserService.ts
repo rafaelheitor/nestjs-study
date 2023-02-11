@@ -11,13 +11,13 @@ export class GetUserService implements GetUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async execute(port?: GetUserPort): Promise<UserUsecaseDto> {
-    const user: User = await this.userRepository.getByEmail(port.email);
+    const user: User = await this.userRepository.getById(port.id);
 
     CoreAssert.notEmpty(
       user,
       Exception.new({
         code: Code.ENTITY_NOT_FOUND_ERROR,
-        overrideMessage: `User with email ${port.email} was not found `,
+        overrideMessage: `User with id ${port.id} was not found `,
       }),
     );
     const userFound: UserUsecaseDto = UserUsecaseDto.newFromUser(user);

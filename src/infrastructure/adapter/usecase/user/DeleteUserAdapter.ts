@@ -9,8 +9,8 @@ export class DeleteUserAdapter
   implements DeleteUserPort
 {
   @Expose()
-  @IsEmail()
-  public email: string;
+  @IsString()
+  public id: string;
 
   public static async new(payload: DeleteUserPort): Promise<DeleteUserAdapter> {
     const adapter: DeleteUserAdapter = plainToClass(DeleteUserAdapter, payload);

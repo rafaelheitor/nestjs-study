@@ -1,5 +1,5 @@
 export interface EditUserPort {
-  email: string;
+  id: string;
   name?: string;
   password?: string;
 }

@@ -13,32 +13,23 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3333/users/user
+GET http://localhost:3333/users/52f063fd-8fb1-49e2-8f5f-8de611e00a99
 Content-Type: application/json
-
-{
-    "email": "joao@email.com"
-}
 
 ###
-PATCH http://localhost:3333/users/edit
+PATCH http://localhost:3333/users/edit/779bcc49-0238-4147-8feb-9360f1e0e2b2
 Content-Type: application/json
 
 {
-    "email": "joao@email.com",
     "name": "Rafael",
     "password": "03051979"
 }
 
 ###
 
-DELETE  http://localhost:3333/users/delete
+DELETE  http://localhost:3333/users/delete/15b666b6-c44a-444b-a5cf-65a2664467a2
 Content-Type: application/json
 x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY29tIiwiaWF0IjoxNjc1OTg4ODY0LCJleHAiOjE2NzU5OTI0NjR9.CdYQ0GK0LEdZKffPLkPbwsJEIym-dIm17imW3Y4rzBI
-
-{
-    "email": "joao@email.com"
-}
 
 ###
 
@@ -63,23 +54,19 @@ x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY2
 }
 
 ###
-PATCH  http://localhost:3333/product/edit
+PATCH  http://localhost:3333/product/edit/b7ab3f92-3335-4c64-b885-d9d2e82234d9
 Content-Type: application/json
 
 {
-    "productId": "b7ab3f92-3335-4c64-b885-d9d2e82234d9",
     "name": "new Test Product",
     "image": "new url/image",
     "price": "80",
     "quantity": 2
 }
 ###
-GET   http://localhost:3333/product/product
+GET   http://localhost:3333/product/c256b486-64da-45d0-896b-ab3a2997db7e
 Content-Type: application/json
 
-{
-    "productId": "c256b486-64da-45d0-896b-ab3a2997db7e"
-}
 ###
 DELETE    http://localhost:3333/product/delete/c256b486-64da-45d0-896b-ab3a2997db7e
 Content-Type: application/json

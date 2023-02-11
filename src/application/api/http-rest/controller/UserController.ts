@@ -7,6 +7,7 @@ import {
   Patch,
   Delete,
   HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
 import { UserDITokens } from '@core/domain/user/di/UserDITokens';
@@ -27,9 +28,8 @@ import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRestApiResponseUser } from './documentation/user/HttpRestApiResponseUser';
 import { HttpRestApiModelEditUserBody } from './documentation/user/HttpRestApiModelEditUserBody';
 import { HttpRestApiResponseEditedUser } from './documentation/user/HttpRestApiResponseEditedUser';
-import { HttpRestApiModelGetUserBody } from './documentation/user/HttpRestApiModelGetUserBody';
-import { HttpRestApiModelDeleteUserBody } from './documentation/user/HttpRestApiModelDeleteUserBody';
 import { HttpRestApiResponseDeletedUser } from './documentation/user/HttpRestApiResponseDeletedUser';
+import { DeleteUserUseCaseDto } from '@core/domain/user/usecase/dto/DeleteUserUseCaseDto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -51,7 +51,9 @@ export class UserController {
   @Post('new')
   @ApiBody({ type: HttpRestApiModelCreateUserBody })
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseUser })
-  public async createUser(@Body() body: HttpRestApiModelCreateUserBody) {
+  public async createUser(
+    @Body() body: HttpRestApiModelCreateUserBody,
+  ): Promise<CoreApiResponse<UserUsecaseDto>> {
     const adapter: CreateUserAdapter = await CreateUserAdapter.new({
       name: body.name,
       email: body.email,
@@ -66,24 +68,28 @@ export class UserController {
     return CoreApiResponse.success(createdUser, 'User Created');
   }
 
-  @ApiBody({ type: HttpRestApiModelGetUserBody })
+  @Get(':userId')
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseUser })
-  @Get('user')
-  public async getUser(@Body() body: HttpRestApiModelGetUserBody) {
+  public async getUser(
+    @Param('userId') userId: string,
+  ): Promise<CoreApiResponse<UserUsecaseDto>> {
     const adapter: GetUserAdapter = await GetUserAdapter.new({
-      email: body.email,
+      id: userId,
     });
 
     const user: UserUsecaseDto = await this.getUserUseCase.execute(adapter);
     return CoreApiResponse.success(user, 'User found');
   }
 
-  @Patch('edit')
+  @Patch('edit/:userId')
   @ApiBody({ type: HttpRestApiModelEditUserBody })
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseEditedUser })
-  public async editUser(@Body() body: HttpRestApiModelEditUserBody) {
+  public async editUser(
+    @Param('userId') userId: string,
+    @Body() body: HttpRestApiModelEditUserBody,
+  ): Promise<CoreApiResponse<EditUserUseCaseDto>> {
     const adapter: EditUserAdapter = await EditUserAdapter.new({
-      email: body.email,
+      id: userId,
       name: body.name,
       password: body.password,
     });
@@ -96,15 +102,17 @@ export class UserController {
   }
 
   @HttpAuth(UserRoles.ADMIN)
-  @Delete('delete')
-  @ApiBody({ type: HttpRestApiModelDeleteUserBody })
+  @Delete('delete/:userId')
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseDeletedUser })
-  public async deleteUser(@Body() body: HttpRestApiModelDeleteUserBody) {
+  public async deleteUser(
+    @Param('userId') userId: string,
+  ): Promise<CoreApiResponse<DeleteUserUseCaseDto>> {
     const adapter: DeleteUserAdapter = await DeleteUserAdapter.new({
-      email: body.email,
+      id: userId,
     });
 
-    const deletedUser = await this.deleteUserUseCase.execute(adapter);
+    const deletedUser: DeleteUserUseCaseDto =
+      await this.deleteUserUseCase.execute(adapter);
 
     return CoreApiResponse.success(deletedUser, 'User Deleted');
   }

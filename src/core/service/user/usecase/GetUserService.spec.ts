@@ -39,31 +39,31 @@ describe('Tests GetUserService', () => {
     );
   });
   describe('Execute Module', () => {
-    test('When user is valide, expect it find user in repository', async () => {
+    test('When user is valid, expect it find user in repository', async () => {
       const userPort: CreateUserPort = createPort();
       const mockUser: User = await User.new(userPort);
 
-      jest.spyOn(userRepository, 'getByEmail').mockImplementation(async () => {
+      jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
         return mockUser;
       });
 
       const expectedUser: UserUsecaseDto = UserUsecaseDto.newFromUser(mockUser);
       const resultUser: UserUsecaseDto = await getUserService.execute({
-        email: mockUser.getEmail(),
+        id: mockUser.getId(),
       });
 
       expect(resultUser).toEqual(expectedUser);
     });
 
-    test('When user is not found, expect it throws exception', async () => {
+    test('If user was not found, expect it throws exception', async () => {
       jest
-        .spyOn(userRepository, 'getByEmail')
+        .spyOn(userRepository, 'getById')
         .mockImplementation(async () => undefined);
 
       expect.hasAssertions();
 
       try {
-        const getUserPort: GetUserPort = { email: 'user@email.com' };
+        const getUserPort: GetUserPort = { id: 'user@email.com' };
         await getUserService.execute(getUserPort);
       } catch (error) {
         const exception: Exception<ClassValidationDetails> =

@@ -43,7 +43,7 @@ describe('EditUserService', () => {
       });
 
       const editUserPort: EditUserPort = {
-        email: 'firstemail@email.com',
+        id: mockUser.getId(),
         name: 'Novo Nome',
         password: 'novopassword',
       };
@@ -53,7 +53,7 @@ describe('EditUserService', () => {
         password: editUserPort.password,
       });
 
-      jest.spyOn(userRepository, 'getByEmail').mockImplementation(async () => {
+      jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
         return mockUser;
       });
 

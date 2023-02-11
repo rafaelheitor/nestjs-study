@@ -11,6 +11,10 @@ export class EditUserAdapter
 {
   @Expose()
   @IsString()
+  public id: string;
+
+  @Expose()
+  @IsString()
   public name: string;
 
   @Expose()
@@ -19,10 +23,6 @@ export class EditUserAdapter
     message: 'Password must contain letters numbers and special characteres',
   })
   public password: string;
-
-  @Expose()
-  @IsEmail()
-  public email: string;
 
   public static async new(payload: EditUserPort): Promise<EditUserAdapter> {
     const adapter: EditUserAdapter = plainToClass(EditUserAdapter, payload);

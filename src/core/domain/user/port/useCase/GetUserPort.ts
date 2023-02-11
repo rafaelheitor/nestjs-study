@@ -1,3 +1,3 @@
 export interface GetUserPort {
-  email: string;
+  id: string;
 }

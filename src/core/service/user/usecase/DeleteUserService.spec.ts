@@ -46,7 +46,7 @@ describe('DeleteUserService', () => {
       removedAt: customRemovedAt,
     });
 
-    jest.spyOn(userRepository, 'getByEmail').mockImplementation(async () => {
+    jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
       return mockUser;
     });
     const deleteMethod = jest.spyOn(userRepository, 'delete');
@@ -56,7 +56,7 @@ describe('DeleteUserService', () => {
 
     const resultDeleteUserDto: DeleteUserUseCaseDto =
       await deleteUserService.execute({
-        email: mockUser.getEmail(),
+        id: mockUser.getId(),
       });
 
     Reflect.set(expectedDeleteUserDto, 'removedAt', customRemovedAt);
@@ -68,13 +68,13 @@ describe('DeleteUserService', () => {
 
   test('When user is not found, expect it throws exception', async () => {
     jest
-      .spyOn(userRepository, 'getByEmail')
+      .spyOn(userRepository, 'getById')
       .mockImplementation(async () => undefined);
     expect.hasAssertions();
 
     try {
-      const userPort = 'email@email.com';
-      await deleteUserService.execute({ email: userPort });
+      const userPort = 'userid';
+      await deleteUserService.execute({ id: userPort });
     } catch (error) {
       const exception: Exception<ClassValidationDetails> =
         error as Exception<ClassValidationDetails>;
