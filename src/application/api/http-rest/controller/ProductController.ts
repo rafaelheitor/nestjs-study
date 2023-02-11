@@ -75,12 +75,12 @@ export class ProductController {
     return CoreApiResponse.success(editedProduct, 'Product edited successfuly');
   }
 
-  @Get('product')
+  @Get('product/:productId')
   public async getProduct(
-    @Body() body,
+    @Param() param,
   ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: GetProductAdapter = await GetProductAdapter.new({
-      productId: body.productId,
+      productId: param.productId,
     });
 
     const product = await this.getProductUseCase.execute(adapter);
