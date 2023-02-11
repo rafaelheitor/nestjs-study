@@ -6,6 +6,7 @@ import {
   Post,
   Patch,
   Delete,
+  HttpStatus,
 } from '@nestjs/common';
 import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
 import { UserDITokens } from '@core/domain/user/di/UserDITokens';
@@ -21,6 +22,14 @@ import { EditUserAdapter } from '@infrastructure/adapter/usecase/user/EditUserAd
 import { GetUserAdapter } from '@infrastructure/adapter/usecase/user/GetUserAdapter';
 import { HttpAuth } from '../auth/decorator/HttpAuth';
 import { UserRoles } from '@core/common/enums/UserEnums';
+import { HttpRestApiModelCreateUserBody } from './documentation/user/HttpRestApiModelCreateUserBody';
+import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { HttpRestApiResponseUser } from './documentation/user/HttpRestApiResponseUser';
+import { HttpRestApiModelEditUserBody } from './documentation/user/HttpRestApiModelEditUserBody';
+import { HttpRestApiResponseEditedUser } from './documentation/user/HttpRestApiResponseEditedUser';
+import { HttpRestApiModelGetUserBody } from './documentation/user/HttpRestApiModelGetUserBody';
+import { HttpRestApiModelDeleteUserBody } from './documentation/user/HttpRestApiModelDeleteUserBody';
+import { HttpRestApiResponseDeletedUser } from './documentation/user/HttpRestApiResponseDeletedUser';
 
 @Controller('users')
 export class UserController {
@@ -39,7 +48,9 @@ export class UserController {
   ) {}
 
   @Post('new')
-  public async createUser(@Body() body) {
+  @ApiBody({ type: HttpRestApiModelCreateUserBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseUser })
+  public async createUser(@Body() body: HttpRestApiModelCreateUserBody) {
     const adapter: CreateUserAdapter = await CreateUserAdapter.new({
       name: body.name,
       email: body.email,
@@ -54,8 +65,10 @@ export class UserController {
     return CoreApiResponse.success(createdUser, 'User Created');
   }
 
+  @ApiBody({ type: HttpRestApiModelGetUserBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseUser })
   @Get('user')
-  public async getUser(@Body() body) {
+  public async getUser(@Body() body: HttpRestApiModelGetUserBody) {
     const adapter: GetUserAdapter = await GetUserAdapter.new({
       email: body.email,
     });
@@ -65,7 +78,9 @@ export class UserController {
   }
 
   @Patch('edit')
-  public async editUser(@Body() body) {
+  @ApiBody({ type: HttpRestApiModelEditUserBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseEditedUser })
+  public async editUser(@Body() body: HttpRestApiModelEditUserBody) {
     const adapter: EditUserAdapter = await EditUserAdapter.new({
       email: body.email,
       name: body.name,
@@ -81,6 +96,8 @@ export class UserController {
 
   @HttpAuth(UserRoles.ADMIN)
   @Delete('delete')
+  @ApiBody({ type: HttpRestApiModelDeleteUserBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseDeletedUser })
   public async deleteUser(@Body() body) {
     const adapter: DeleteUserAdapter = await DeleteUserAdapter.new({
       email: body.email,

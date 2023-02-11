@@ -1,16 +1,10 @@
-import { config } from '@infrastructure/config/config';
-import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { RootModule } from './application/di/RootModule';
+import { ServerApplication } from '@application/ServerApplication';
 
-async function bootstrap() {
-  const app = await NestFactory.create(RootModule);
+(async (): Promise<void> => {
+  await runApplication();
+})();
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
-  await app.listen(config().ApiServerConfig.API_PORT);
+async function runApplication(): Promise<void> {
+  const serverApplication: ServerApplication = ServerApplication.new();
+  await serverApplication.run();
 }
-bootstrap();
