@@ -6,15 +6,14 @@ import { OpenAPIObject } from '@nestjs/swagger';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger/dist';
 
 export class ServerApplication {
-  private readonly host: string = config().ApiServerConfig.API_HOST;
-  private readonly port: number = Number(config().ApiServerConfig.API_PORT);
+  private readonly port: number | string = config().ApiServerConfig.API_PORT;
 
   public async run(): Promise<void> {
     const app: NestExpressApplication =
       await NestFactory.create<NestExpressApplication>(RootModule);
 
     this.buildDocumentation(app);
-    await app.listen(this.port, this.host);
+    await app.listen(this.port);
   }
 
   private buildDocumentation(app: NestExpressApplication): void {

@@ -98,16 +98,13 @@ export class UserController {
   @Delete('delete')
   @ApiBody({ type: HttpRestApiModelDeleteUserBody })
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseDeletedUser })
-  public async deleteUser(@Body() body) {
+  public async deleteUser(@Body() body: HttpRestApiModelDeleteUserBody) {
     const adapter: DeleteUserAdapter = await DeleteUserAdapter.new({
       email: body.email,
     });
 
     const deletedUser = await this.deleteUserUseCase.execute(adapter);
-    if (deletedUser) {
-      return CoreApiResponse.success('User Deleted');
-    }
 
-    return deletedUser;
+    return CoreApiResponse.success(deletedUser, 'User Deleted');
   }
 }
