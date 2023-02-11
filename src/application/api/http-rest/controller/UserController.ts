@@ -23,7 +23,7 @@ import { GetUserAdapter } from '@infrastructure/adapter/usecase/user/GetUserAdap
 import { HttpAuth } from '../auth/decorator/HttpAuth';
 import { UserRoles } from '@core/common/enums/UserEnums';
 import { HttpRestApiModelCreateUserBody } from './documentation/user/HttpRestApiModelCreateUserBody';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRestApiResponseUser } from './documentation/user/HttpRestApiResponseUser';
 import { HttpRestApiModelEditUserBody } from './documentation/user/HttpRestApiModelEditUserBody';
 import { HttpRestApiResponseEditedUser } from './documentation/user/HttpRestApiResponseEditedUser';
@@ -31,6 +31,7 @@ import { HttpRestApiModelGetUserBody } from './documentation/user/HttpRestApiMod
 import { HttpRestApiModelDeleteUserBody } from './documentation/user/HttpRestApiModelDeleteUserBody';
 import { HttpRestApiResponseDeletedUser } from './documentation/user/HttpRestApiResponseDeletedUser';
 
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(
