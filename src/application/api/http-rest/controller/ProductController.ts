@@ -1,7 +1,6 @@
 import { CoreApiResponse } from '@core/common/api/CoreApiResponse';
 import { UserRoles } from '@core/common/enums/UserEnums';
 import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
-import { ProductRepositoryPort } from '@core/domain/product/port/persistence/ProductRepositoryPort';
 import { CreateProductUseCase } from '@core/domain/product/usecase/CreateProductUseCase';
 import { DeleteProductUseCase } from '@core/domain/product/usecase/DeleteProductUseCase';
 import { DeleteProductUseCaseDto } from '@core/domain/product/usecase/dto/DeleteProductUseCaseDto';
@@ -17,13 +16,20 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Inject,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpAuth } from '../auth/decorator/HttpAuth';
+import { HttpRestApiEditProductBody } from './documentation/product/HttpRestApiEditProductBody';
+import { HttpRestApiModelCreateProductBody } from './documentation/product/HttpRestApiModelCreateProductBody';
+import { HttpRestApiModelProductDeleted } from './documentation/product/HttpRestApiModelProductDeleted';
+import { HttpRestApiResponseProduct } from './documentation/product/HttpRestApiResponseProduct';
 
+@ApiTags('Product')
 @Controller('product')
 export class ProductController {
   constructor(
@@ -42,8 +48,10 @@ export class ProductController {
 
   @HttpAuth(UserRoles.ADMIN)
   @Post('new')
+  @ApiBody({ type: HttpRestApiModelCreateProductBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseProduct })
   public async createProduct(
-    @Body() body,
+    @Body() body: HttpRestApiModelCreateProductBody,
   ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: CreateProductAdapter = await CreateProductAdapter.new({
       name: body.name,
@@ -59,10 +67,15 @@ export class ProductController {
   }
 
   @HttpAuth(UserRoles.ADMIN)
-  @Patch('edit')
-  public async edit(@Body() body): Promise<CoreApiResponse<ProductUseCaseDto>> {
+  @Patch('edit/:productId')
+  @ApiBody({ type: HttpRestApiEditProductBody })
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseProduct })
+  public async edit(
+    @Param('productId') productId: string,
+    @Body() body: HttpRestApiEditProductBody,
+  ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: EditProductAdapter = await EditProductAdapter.new({
-      productId: body.productId,
+      productId: productId,
       name: body.name,
       image: body.image,
       price: body.price,
@@ -75,12 +88,13 @@ export class ProductController {
     return CoreApiResponse.success(editedProduct, 'Product edited successfuly');
   }
 
-  @Get('product/:productId')
+  @Get(':productId')
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseProduct })
   public async getProduct(
-    @Param() param,
+    @Param('productId') productId: string,
   ): Promise<CoreApiResponse<ProductUseCaseDto>> {
     const adapter: GetProductAdapter = await GetProductAdapter.new({
-      productId: param.productId,
+      productId: productId,
     });
 
     const product = await this.getProductUseCase.execute(adapter);
@@ -90,11 +104,12 @@ export class ProductController {
 
   @HttpAuth(UserRoles.ADMIN)
   @Delete('/delete/:productId')
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiModelProductDeleted })
   public async deleteProduct(
-    @Param() param,
+    @Param('productId') productId: string,
   ): Promise<CoreApiResponse<DeleteProductUseCaseDto>> {
     const adapter: DeleteProductAdapter = await DeleteProductAdapter.new({
-      productId: param.productId,
+      productId: productId,
     });
     const deletedProduct: DeleteProductUseCaseDto =
       await this.deleteProductUseCase.execute(adapter);
