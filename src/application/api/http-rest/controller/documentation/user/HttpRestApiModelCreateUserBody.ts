@@ -11,6 +11,6 @@ export class HttpRestApiModelCreateUserBody {
   @ApiProperty({ type: 'string' })
   public password: string;
 
-  @ApiProperty({ type: 'string' })
+  @ApiProperty({ type: 'string', required: false })
   public role: UserRoles;
 }

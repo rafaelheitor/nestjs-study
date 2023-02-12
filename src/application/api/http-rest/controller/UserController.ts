@@ -24,7 +24,7 @@ import { GetUserAdapter } from '@infrastructure/adapter/usecase/user/GetUserAdap
 import { HttpAuth } from '../auth/decorator/HttpAuth';
 import { UserRoles } from '@core/common/enums/UserEnums';
 import { HttpRestApiModelCreateUserBody } from './documentation/user/HttpRestApiModelCreateUserBody';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpRestApiResponseUser } from './documentation/user/HttpRestApiResponseUser';
 import { HttpRestApiModelEditUserBody } from './documentation/user/HttpRestApiModelEditUserBody';
 import { HttpRestApiResponseEditedUser } from './documentation/user/HttpRestApiResponseEditedUser';
@@ -101,6 +101,7 @@ export class UserController {
     return CoreApiResponse.success(editedUser, 'user was Edited successfully');
   }
 
+  @ApiBasicAuth()
   @HttpAuth(UserRoles.ADMIN)
   @Delete('delete/:userId')
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseDeletedUser })

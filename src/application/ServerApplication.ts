@@ -25,7 +25,7 @@ export class ServerApplication {
       .setTitle(title)
       .setDescription(description)
       .setVersion(version)
-      .addBasicAuth({
+      .addSecurity('basic', {
         type: 'apiKey',
         in: 'header',
         name: config().ApiServerConfig.API_ACCESS_TOKEN_HEADER,

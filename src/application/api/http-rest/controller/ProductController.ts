@@ -22,7 +22,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HttpAuth } from '../auth/decorator/HttpAuth';
 import { HttpRestApiEditProductBody } from './documentation/product/HttpRestApiEditProductBody';
 import { HttpRestApiModelCreateProductBody } from './documentation/product/HttpRestApiModelCreateProductBody';
@@ -46,6 +46,7 @@ export class ProductController {
     private readonly deleteProductUseCase: DeleteProductUseCase,
   ) {}
 
+  @ApiBasicAuth()
   @HttpAuth(UserRoles.ADMIN)
   @Post('new')
   @ApiBody({ type: HttpRestApiModelCreateProductBody })
@@ -66,6 +67,7 @@ export class ProductController {
     return CoreApiResponse.success(createdProduct, 'Product created');
   }
 
+  @ApiBasicAuth()
   @HttpAuth(UserRoles.ADMIN)
   @Patch('edit/:productId')
   @ApiBody({ type: HttpRestApiEditProductBody })
@@ -102,6 +104,7 @@ export class ProductController {
     return CoreApiResponse.success(product, 'Product Found');
   }
 
+  @ApiBasicAuth()
   @HttpAuth(UserRoles.ADMIN)
   @Delete('/delete/:productId')
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiModelProductDeleted })
