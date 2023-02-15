@@ -44,10 +44,10 @@ Content-Type: application/json
 ### Product
 POST http://localhost:3333/product/new
 Content-Type: application/json
-x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY29tIiwiaWF0IjoxNjc1OTg4ODY0LCJleHAiOjE2NzU5OTI0NjR9.CdYQ0GK0LEdZKffPLkPbwsJEIym-dIm17imW3Y4rzBI
+x-api-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvYW9AZW1haWwuY29tIiwiaWF0IjoxNjc2NDY2ODAyLCJleHAiOjE2NzY0NzA0MDJ9.2-sfS5MEDDmgK2nHN9A728zKXd5CjS8dE2P2hPp4h3M
 
 {
-    "name": "Test Product",
+    "name": "Test Product 4",
     "image": "url/image",
     "price": 50,
     "quantity": 10
@@ -65,6 +65,10 @@ Content-Type: application/json
 }
 ###
 GET   http://localhost:3333/product/c256b486-64da-45d0-896b-ab3a2997db7e
+Content-Type: application/json
+
+###
+GET http://localhost:3333/product/list
 Content-Type: application/json
 
 ###
