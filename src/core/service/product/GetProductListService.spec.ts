@@ -5,15 +5,7 @@ import { ProductUseCaseDto } from '@core/domain/product/usecase/dto/ProductUseCa
 import { GetProductListUseCase } from '@core/domain/product/usecase/GetProductListUseCase';
 import { ProductRepositoryInMemory } from '@infrastructure/adapter/persistence/ProductRepositoryAdapter';
 import { Test, TestingModule } from '@nestjs/testing';
-
-export class GetProductListService implements GetProductListUseCase {
-  constructor(private readonly productRepository: ProductRepositoryPort) {}
-
-  async execute(): Promise<ProductUseCaseDto[]> {
-    const products: Product[] = await this.productRepository.getAllProducts();
-    return ProductUseCaseDto.newListFromProduct(products);
-  }
-}
+import { GetProductListService } from './GetProductListService';
 
 describe('GetAllProductsService', () => {
   let getProductListUseCase: GetProductListUseCase;
@@ -27,7 +19,7 @@ describe('GetAllProductsService', () => {
           useClass: ProductRepositoryInMemory,
         },
         {
-          provide: 'GetProductListUseCase',
+          provide: ProductDITokens.GetProductListUseCase,
           useFactory: (productRepository) =>
             new GetProductListService(productRepository),
           inject: [ProductDITokens.ProductRepository],
@@ -36,7 +28,7 @@ describe('GetAllProductsService', () => {
     }).compile();
 
     getProductListUseCase = module.get<GetProductListUseCase>(
-      'GetProductListUseCase',
+      ProductDITokens.GetProductListUseCase,
     );
 
     productRepository = module.get<ProductRepositoryPort>(

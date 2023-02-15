@@ -10,6 +10,10 @@ export class ProductDITokens {
   public static readonly GetProductUseCase: unique symbol =
     Symbol('GetProductUseCase');
 
+  public static readonly GetProductListUseCase: unique symbol = Symbol(
+    'GetProductListUseCase',
+  );
+
   public static readonly DeleteProductUseCase: unique symbol = Symbol(
     'DeleteProductUseCase',
   );

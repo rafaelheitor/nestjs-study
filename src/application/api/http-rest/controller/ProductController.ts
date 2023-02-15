@@ -6,6 +6,7 @@ import { DeleteProductUseCase } from '@core/domain/product/usecase/DeleteProduct
 import { DeleteProductUseCaseDto } from '@core/domain/product/usecase/dto/DeleteProductUseCaseDto';
 import { ProductUseCaseDto } from '@core/domain/product/usecase/dto/ProductUseCaseDto';
 import { EditProductUseCase } from '@core/domain/product/usecase/EditProductUseCase';
+import { GetProductListUseCase } from '@core/domain/product/usecase/GetProductListUseCase';
 import { GetProductUseCase } from '@core/domain/product/usecase/GetProductUseCase';
 import { CreateProductAdapter } from '@infrastructure/adapter/usecase/product/CreateProductAdapter';
 import { DeleteProductAdapter } from '@infrastructure/adapter/usecase/product/DeleteProductAdapter';
@@ -28,6 +29,7 @@ import { HttpRestApiEditProductBody } from './documentation/product/HttpRestApiE
 import { HttpRestApiModelCreateProductBody } from './documentation/product/HttpRestApiModelCreateProductBody';
 import { HttpRestApiModelProductDeleted } from './documentation/product/HttpRestApiModelProductDeleted';
 import { HttpRestApiResponseProduct } from './documentation/product/HttpRestApiResponseProduct';
+import { HttpRestApiResponseProductList } from './documentation/product/HttpRestApiResponseProductList';
 
 @ApiTags('Product')
 @Controller('product')
@@ -41,6 +43,9 @@ export class ProductController {
 
     @Inject(ProductDITokens.GetProductUseCase)
     private readonly getProductUseCase: GetProductUseCase,
+
+    @Inject(ProductDITokens.GetProductListUseCase)
+    private readonly getProductListUseCase: GetProductListUseCase,
 
     @Inject(ProductDITokens.DeleteProductUseCase)
     private readonly deleteProductUseCase: DeleteProductUseCase,
@@ -88,6 +93,14 @@ export class ProductController {
       await this.editProductUseCase.execute(adapter);
 
     return CoreApiResponse.success(editedProduct, 'Product edited successfuly');
+  }
+
+  @Get('list')
+  @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseProductList })
+  public async getProductList(): Promise<CoreApiResponse<ProductUseCaseDto[]>> {
+    const products: ProductUseCaseDto[] =
+      await this.getProductListUseCase.execute();
+    return CoreApiResponse.success(products, 'Product List');
   }
 
   @Get(':productId')

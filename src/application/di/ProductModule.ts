@@ -3,6 +3,7 @@ import { ProductDITokens } from '@core/domain/product/di/ProductDITokens';
 import { CreateProductService } from '@core/service/product/CreateProductService';
 import { DeleteProductService } from '@core/service/product/DeleteProductService';
 import { EditProductService } from '@core/service/product/EditProductService';
+import { GetProductListService } from '@core/service/product/GetProductListService';
 import { GetProductService } from '@core/service/product/GetProductService';
 import { ProductRepositoryInMemory } from '@infrastructure/adapter/persistence/ProductRepositoryAdapter';
 import { Module, Provider } from '@nestjs/common';
@@ -23,6 +24,12 @@ const useCaseProviders: Provider[] = [
   {
     provide: ProductDITokens.GetProductUseCase,
     useFactory: (productRepository) => new GetProductService(productRepository),
+    inject: [ProductDITokens.ProductRepository],
+  },
+  {
+    provide: ProductDITokens.GetProductListUseCase,
+    useFactory: (productRepository) =>
+      new GetProductListService(productRepository),
     inject: [ProductDITokens.ProductRepository],
   },
   {
