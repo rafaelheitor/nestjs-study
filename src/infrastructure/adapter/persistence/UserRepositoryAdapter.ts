@@ -23,15 +23,16 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
     return this.users.find((user) => user.getId() === id);
   }
 
+  async getAll(): Promise<User[]> {
+    return this.users;
+  }
+
   async edit(requestUser: User): Promise<User> {
     this.delete(requestUser.getEmail());
     const savedUser = this.save(requestUser);
     return savedUser;
   }
 
-  getAll(): Promise<User[]> {
-    throw new Error('Method not implemented.');
-  }
   async getByEmail(email: string): Promise<User> | undefined {
     const user: User = this.users.find((user) => user.getEmail() === email);
     return user;
