@@ -25,6 +25,9 @@ export class ProductRepositoryInMemory implements ProductRepositoryPort {
     return foundProduct;
   }
 
+  async getAllProducts(): Promise<Product[]> {
+    return this.products;
+  }
   async editProduct(id: string, data: EditProductPayload): Promise<Product> {
     const foundProduct: Product = await this.getProduct(id);
     foundProduct.edit({
