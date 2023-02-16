@@ -7,6 +7,9 @@ export class UserDITokens {
   public static readonly GetUserUseCase: unique symbol =
     Symbol('GetUserUseCase');
 
+  public static readonly GetUserListUseCase: unique symbol =
+    Symbol('GetUserListUseCase');
+
   public static readonly EditUserUseCase: unique symbol =
     Symbol('EditUserUseCase');
 

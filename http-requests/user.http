@@ -17,6 +17,10 @@ GET http://localhost:3333/users/52f063fd-8fb1-49e2-8f5f-8de611e00a99
 Content-Type: application/json
 
 ###
+GET http://localhost:3333/users/list
+Content-Type: application/json
+
+###
 PATCH http://localhost:3333/users/edit/779bcc49-0238-4147-8feb-9360f1e0e2b2
 Content-Type: application/json
 

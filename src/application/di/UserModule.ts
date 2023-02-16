@@ -6,6 +6,7 @@ import { UserController } from '@application/api/http-rest/controller/UserContro
 import { GetUserService } from '@core/service/user/usecase/GetUserService';
 import { EditUserService } from '@core/service/user/usecase/EditUserService';
 import { DeleteUserService } from '@core/service/user/usecase/DeleteUserService';
+import { GetUserListService } from '@core/service/user/usecase/GetUserListService';
 
 const persistenceProvider: Provider[] = [
   {
@@ -26,6 +27,13 @@ const useCaseProviders: Provider[] = [
     provide: UserDITokens.GetUserUseCase,
     useFactory: (userRepository) => {
       return new GetUserService(userRepository);
+    },
+    inject: [UserDITokens.UserRepository],
+  },
+  {
+    provide: UserDITokens.GetUserListUseCase,
+    useFactory: (userRepository) => {
+      return new GetUserListService(userRepository);
     },
     inject: [UserDITokens.UserRepository],
   },

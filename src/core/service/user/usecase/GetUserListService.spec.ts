@@ -19,14 +19,16 @@ describe('GetUserListService', () => {
           useClass: UserRepositoryInMemory,
         },
         {
-          provide: 'GetUserListUseCase',
+          provide: UserDITokens.GetUserListUseCase,
           useFactory: (userRepository) =>
             new GetUserListService(userRepository),
           inject: [UserDITokens.UserRepository],
         },
       ],
     }).compile();
-    getUserListUseCase = module.get<GetUserListUseCase>('GetUserListUseCase');
+    getUserListUseCase = module.get<GetUserListUseCase>(
+      UserDITokens.GetUserListUseCase,
+    );
     userRepository = module.get<UserRepositoryPort>(
       UserDITokens.UserRepository,
     );

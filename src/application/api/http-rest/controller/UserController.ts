@@ -30,6 +30,8 @@ import { HttpRestApiModelEditUserBody } from './documentation/user/HttpRestApiMo
 import { HttpRestApiResponseEditedUser } from './documentation/user/HttpRestApiResponseEditedUser';
 import { HttpRestApiResponseDeletedUser } from './documentation/user/HttpRestApiResponseDeletedUser';
 import { DeleteUserUseCaseDto } from '@core/domain/user/usecase/dto/DeleteUserUseCaseDto';
+import { GetUserListUseCase } from '@core/domain/user/usecase/GetUserListUseCase';
+import { HttpRestApiResponseUserList } from './documentation/user/HttpRestApiResponseUserList';
 
 @ApiTags('Users')
 @Controller('users')
@@ -40,6 +42,9 @@ export class UserController {
 
     @Inject(UserDITokens.GetUserUseCase)
     private readonly getUserUseCase: GetUserUseCase,
+
+    @Inject(UserDITokens.GetUserListUseCase)
+    private readonly getUserListUseCase: GetUserListUseCase,
 
     @Inject(UserDITokens.EditUserUseCase)
     private readonly editUserUseCase: EditUserUseCase,
@@ -68,7 +73,7 @@ export class UserController {
     return CoreApiResponse.success(createdUser, 'User Created');
   }
 
-  @Get(':userId')
+  @Get('/unique/:userId')
   @ApiResponse({ status: HttpStatus.OK, type: HttpRestApiResponseUser })
   public async getUser(
     @Param('userId') userId: string,
@@ -79,6 +84,19 @@ export class UserController {
 
     const user: UserUsecaseDto = await this.getUserUseCase.execute(adapter);
     return CoreApiResponse.success(user, 'User found');
+  }
+
+  @ApiBasicAuth()
+  @HttpAuth(UserRoles.ADMIN)
+  @Get('list')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: HttpRestApiResponseUserList,
+  })
+  async getAllUsers(): Promise<CoreApiResponse<UserUsecaseDto[]>> {
+    const userList: UserUsecaseDto[] = await this.getUserListUseCase.execute();
+
+    return CoreApiResponse.success(userList, 'List of all users');
   }
 
   @Patch('edit/:userId')
