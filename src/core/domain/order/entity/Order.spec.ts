@@ -1,5 +1,6 @@
 import { Product } from '@core/domain/product/entity/Product';
 import { Order } from './Order';
+import { OrderStatus } from './type/OrderStatus';
 import { Payment } from './type/PaymentEnum';
 
 describe('Order entity', () => {
@@ -42,6 +43,22 @@ describe('Order entity', () => {
       product.getQuantity(),
     );
     expect(mockOrder.getUserId()).toBe('Mock User id');
+  });
+
+  test('Should update Order Status', async () => {
+    const product: Product = await createProduct();
+    const mockProducts: Product[] = [product];
+
+    const mockOrder: Order = await Order.new({
+      userId: 'Mock User id',
+      products: mockProducts,
+    });
+
+    mockOrder.updateStatus({
+      status: OrderStatus.PaymentApproved,
+    });
+
+    expect(mockOrder.getStatus()).toBe('Payment Approved');
   });
 });
 
