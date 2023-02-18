@@ -1,6 +1,6 @@
 import { OrderStatus } from '../../entity/type/OrderStatus';
 
-export interface EditOrderStatus {
+export interface EditOrderStatusPort {
   id: string;
   status: OrderStatus;
 }
