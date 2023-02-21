@@ -4,7 +4,7 @@ import { Payment } from '../../entity/type/PaymentEnum';
 
 export interface CreateOrderPort {
   userId: string;
-  products: Product[];
-  paymentMethod: Payment;
-  status: OrderStatus;
+  products: { productId: string }[];
+  paymentMethod?: Payment;
+  status?: OrderStatus;
 }
