@@ -1,4 +1,3 @@
-import { ProductModule } from '@application/di/ProductModule';
 import { Code } from '@core/common/code/Code';
 import { Exception } from '@core/common/exception/Exception';
 import { CoreAssert } from '@core/common/util/assert/CoreAssert';
@@ -13,7 +12,6 @@ import { Product } from '@core/domain/product/entity/Product';
 import { ProductRepositoryPort } from '@core/domain/product/port/persistence/ProductRepositoryPort';
 import { ProductRepositoryInMemory } from '@infrastructure/adapter/persistence/ProductRepositoryAdapter';
 import { Test, TestingModule } from '@nestjs/testing';
-import { json } from 'stream/consumers';
 
 export class OrderRepositoryInMemory implements OrderRepositoryPort {
   saveOrder(order: Order): Promise<Order> {
