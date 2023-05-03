@@ -43,7 +43,7 @@ describe('Tests GetUserService', () => {
       const userPort: CreateUserPort = createPort();
       const mockUser: User = await User.new(userPort);
 
-      jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
+      jest.spyOn(userRepository, 'getOne').mockImplementation(async () => {
         return mockUser;
       });
 
@@ -57,7 +57,7 @@ describe('Tests GetUserService', () => {
 
     test('If user was not found, expect it throws exception', async () => {
       jest
-        .spyOn(userRepository, 'getById')
+        .spyOn(userRepository, 'getOne')
         .mockImplementation(async () => undefined);
 
       expect.hasAssertions();

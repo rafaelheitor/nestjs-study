@@ -19,7 +19,7 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
     return savedUser;
   }
 
-  async getById(id: string): Promise<User> {
+  async getOne(id: string): Promise<User> {
     return this.users.find((user) => user.getId() === id);
   }
 
@@ -27,17 +27,28 @@ export class UserRepositoryInMemory implements UserRepositoryPort {
     return this.users;
   }
 
-  async edit(requestUser: User): Promise<User> {
-    this.delete(requestUser.getEmail());
-    const savedUser = this.save(requestUser);
-    return savedUser;
+  async edit(id: string, requestUser: User): Promise<User> {
+    const foundUser = this.getOne(id);
+    
+    if(foundUser != null){
+      this.delete(requestUser.getId());
+      const savedUser = this.save(requestUser);
+      return savedUser;
+    }
+
+    return null
   }
 
   async getByEmail(email: string): Promise<User> | undefined {
     const user: User = this.users.find((user) => user.getEmail() === email);
     return user;
   }
-  delete(email: string): void {
-    this.users = this.users.filter((user) => user.getEmail() !== email);
+  
+  async delete(id: string): Promise<void> {
+     const foundUser = this.getOne(id);
+    
+    if(foundUser != null){
+        this.users.filter(user => user.id != id)     
+     }
   }
 }

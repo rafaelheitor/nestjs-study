@@ -11,7 +11,7 @@ export class DeleteUserService implements DeleteUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async execute(port?: DeleteUserPort): Promise<DeleteUserUseCaseDto> {
-    const foundUser: User = await this.userRepository.getById(port.id);
+    const foundUser: User = await this.userRepository.getOne(port.id);
 
     CoreAssert.isFalse(
       !foundUser,

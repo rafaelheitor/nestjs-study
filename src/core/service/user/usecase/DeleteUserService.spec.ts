@@ -46,7 +46,7 @@ describe('DeleteUserService', () => {
       removedAt: customRemovedAt,
     });
 
-    jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
+    jest.spyOn(userRepository, 'getOne').mockImplementation(async () => {
       return mockUser;
     });
     const deleteMethod = jest.spyOn(userRepository, 'delete');
@@ -68,7 +68,7 @@ describe('DeleteUserService', () => {
 
   test('When user is not found, expect it throws exception', async () => {
     jest
-      .spyOn(userRepository, 'getById')
+      .spyOn(userRepository, 'getOne')
       .mockImplementation(async () => undefined);
     expect.hasAssertions();
 

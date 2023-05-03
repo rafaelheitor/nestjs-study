@@ -11,7 +11,7 @@ export class EditUserService implements EditUserUseCase {
   constructor(private readonly userRepository: UserRepositoryPort) {}
 
   async execute(port?: EditUserPort): Promise<EditUserUseCaseDto> {
-    const foundUser: User = await this.userRepository.getById(port.id);
+    const foundUser: User = await this.userRepository.getOne(port.id);
 
     CoreAssert.isFalse(
       !foundUser,
@@ -25,7 +25,8 @@ export class EditUserService implements EditUserUseCase {
       name: port.name,
       password: port.password,
     });
-    await this.userRepository.edit(foundUser);
+
+    await this.userRepository.edit(port.id, foundUser);
 
     const editedUser: EditUserUseCaseDto =
       EditUserUseCaseDto.newFromUser(foundUser);

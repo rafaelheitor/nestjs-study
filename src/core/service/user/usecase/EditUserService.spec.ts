@@ -53,7 +53,7 @@ describe('EditUserService', () => {
         password: editUserPort.password,
       });
 
-      jest.spyOn(userRepository, 'getById').mockImplementation(async () => {
+      jest.spyOn(userRepository, 'getOne').mockImplementation(async () => {
         return mockUser;
       });
 
@@ -69,7 +69,7 @@ describe('EditUserService', () => {
       const resultUserUseCaseDto: EditUserUseCaseDto =
         await editUserService.execute(editUserPort);
 
-      const result: User = jest.spyOn(userRepository, 'edit').mock.calls[0][0];
+      const result: User = jest.spyOn(userRepository, 'edit').mock.calls[0][1];
       const customEditedAt = new Date(Date.now() - 3000);
 
       Reflect.set(result, 'editedAt', customEditedAt);
