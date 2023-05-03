@@ -61,7 +61,7 @@ describe('CreateOrderService', () => {
       return product;
     });
 
-    jest.spyOn(orderRepository, 'saveOrder').mockImplementation(async () => {
+    jest.spyOn(orderRepository, 'save').mockImplementation(async () => {
       return mockOrder;
     });
 

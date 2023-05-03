@@ -3,19 +3,22 @@ import { OrderStatus } from '@core/domain/order/entity/type/OrderStatus';
 import { OrderRepositoryPort } from '@core/domain/order/port/persistence/OrderRepositoryPort';
 
 export class OrderRepositoryInMemory implements OrderRepositoryPort {
-  saveOrder(order: Order): Promise<Order> {
+  delete(id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  getOrder(id: string): Promise<Order> {
+  save(order: Order): Promise<Order> {
+    throw new Error('Method not implemented.');
+  }
+  getOne(id: string): Promise<Order> {
     throw new Error('Method not implemented.');
   }
   getUserOrders(userId?: string): Promise<Order[]> {
     throw new Error('Method not implemented.');
   }
-  getAllOrders(): Promise<Order[]> {
+  getAll(): Promise<Order[]> {
     throw new Error('Method not implemented.');
   }
-  editOrderStatus(id: string, status: OrderStatus): Promise<Order> {
+  edit(id: string, status: OrderStatus): Promise<Order> {
     throw new Error('Method not implemented.');
   }
 }

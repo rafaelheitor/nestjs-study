@@ -12,7 +12,7 @@ export class EditOrderStatusService implements EditOrderStatusUseCase {
 
   async execute(port?: EditOrderStatusPort): Promise<OrderUseCaseDto> {
     const foundOrder: Order = CoreAssert.notEmpty(
-      await this.orderRepository.getOrder(port.id),
+      await this.orderRepository.getOne(port.id),
       Exception.new({
         code: Code.ENTITY_NOT_FOUND_ERROR,
         overrideMessage: `Order ${port.id} was not found`,
@@ -23,7 +23,7 @@ export class EditOrderStatusService implements EditOrderStatusUseCase {
       status: port.status,
     });
 
-    this.orderRepository.editOrderStatus(port.id, port.status);
+    this.orderRepository.edit(port.id, port.status);
     return OrderUseCaseDto.newFromOrder(foundOrder);
   }
 }

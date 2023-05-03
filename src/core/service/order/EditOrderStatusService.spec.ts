@@ -43,15 +43,13 @@ describe('EditOrderStatusService', () => {
       products: [product],
     });
 
-    jest.spyOn(orderRepository, 'getOrder').mockImplementation(async () => {
+    jest.spyOn(orderRepository, 'getOne').mockImplementation(async () => {
       return mockOrder;
     });
 
-    jest
-      .spyOn(orderRepository, 'editOrderStatus')
-      .mockImplementation(async () => {
-        return mockOrder;
-      });
+    jest.spyOn(orderRepository, 'edit').mockImplementation(async () => {
+      return mockOrder;
+    });
 
     const result: OrderUseCaseDto = await editOrderStatusUseCase.execute({
       id: mockOrder.getId(),
@@ -68,7 +66,7 @@ describe('EditOrderStatusService', () => {
       products: [product],
     });
 
-    jest.spyOn(orderRepository, 'getOrder').mockImplementation(async () => {
+    jest.spyOn(orderRepository, 'getOne').mockImplementation(async () => {
       return undefined;
     });
 

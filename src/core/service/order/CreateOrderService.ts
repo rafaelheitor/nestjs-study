@@ -38,7 +38,7 @@ export class CreateOrderService implements CreateOrderUseCase {
       paymentMethod: port.paymentMethod,
     });
 
-    this.orderRepository.saveOrder(order);
+    this.orderRepository.save(order);
     return OrderUseCaseDto.newFromOrder(order);
   }
 }

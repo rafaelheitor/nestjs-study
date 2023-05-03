@@ -12,7 +12,7 @@ export class GetOrderService implements GetOrderUseCase {
 
   async execute(port?: GetOrderPort): Promise<OrderUseCaseDto> {
     const order: Order = CoreAssert.notEmpty(
-      await this.orderRepository.getOrder(port.id),
+      await this.orderRepository.getOne(port.id),
       Exception.new({
         code: Code.ENTITY_NOT_FOUND_ERROR,
         overrideMessage: `Order ${port.id} was not found`,

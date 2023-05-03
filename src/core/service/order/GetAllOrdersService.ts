@@ -7,7 +7,7 @@ export class GetAllOrdersService implements GetAllOrdersUseCase {
   constructor(private readonly orderRepository: OrderRepositoryPort) {}
 
   async execute(): Promise<OrderUseCaseDto[]> {
-    const allOrders: Order[] = await this.orderRepository.getAllOrders();
+    const allOrders: Order[] = await this.orderRepository.getAll();
 
     return OrderUseCaseDto.newListFromOrder(allOrders);
   }

@@ -41,7 +41,7 @@ describe('GetOrderService', () => {
       products: [product],
     });
 
-    jest.spyOn(orderRepository, 'getOrder').mockImplementation(async () => {
+    jest.spyOn(orderRepository, 'getOne').mockImplementation(async () => {
       return mockOrder;
     });
 
@@ -62,7 +62,7 @@ describe('GetOrderService', () => {
       products: [product],
     });
 
-    jest.spyOn(orderRepository, 'getOrder').mockImplementation(async () => {
+    jest.spyOn(orderRepository, 'getOne').mockImplementation(async () => {
       return undefined;
     });
 
